@@ -1,23 +1,19 @@
 # -*- coding: utf-8 -*-
 
 """
-This module is built on Python standard hashlib, provides utility method
-to find hash value for a bytes, a string, a Python object or a file.
+Made hashlib more user friendly.
 
-Import this module::
+Usage::
 
-    >>> from sfm.fingerprint import fingerprint
+        >>> from fixa.hashes import hashes
+        >>> print(hashes.of_bytes(b"hello"))
+        b1fec41621e338896e2d26f232a6b006
 
-Example::
+        >>> print(hashes.of_str("world"))
+        78e731027d8fd50ed642340b7c9a63b3
 
-    >>> fingerprint.of_bytes(bytes(16))
-    >>> fingerprint.of_text("Hello World")
-    >>> fingerprint.of_pyobj(dict(a=1, b=2, c=3))
-    >>> fingerprint.of_file("fingerprint.py")
-
-You can switch the hash algorithm to use::
-
-    >>> fingerprint.use("md5") # also "sha1", "sha256", "sha512"
+        >>> print(hashes.of_file("hashes.py"))
+        4cddcb5562cbff652b0e4c8a0300337a
 
 Ref:
 
@@ -41,29 +37,11 @@ class HashAlgoEnum(str, enum.Enum):
 class Hashes:
     """
     A hashlib wrapper class allow you to use one line to do hash as you wish.
-
-    :type algorithm: str
-    :param algorithm: default "md5"
-
-    Usage::
-
-        >>> from sfm.fingerprint import fingerprint
-        >>> print(fingerprint.of_bytes(bytes(123)))
-        b1fec41621e338896e2d26f232a6b006
-
-        >>> print(fingerprint.of_text("message"))
-        78e731027d8fd50ed642340b7c9a63b3
-
-        >>> print(fingerprint.of_pyobj({"key": "value"}))
-        4c502ab399c89c8758a2d8c37be98f69
-
-        >>> print(fingerprint.of_file("fingerprint.py"))
-        4cddcb5562cbff652b0e4c8a0300337a
     """
 
     def __init__(
         self,
-        algo: HashAlgoEnum = HashAlgoEnum.sha256,
+        algo: HashAlgoEnum = HashAlgoEnum.md5,
         hexdigest: bool = True,
     ):
         self.algo = getattr(hashlib, algo.value)
