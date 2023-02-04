@@ -477,9 +477,20 @@ def size_of_generator(generator: T.Iterable, memory_efficient=True) -> int:
         return len(list(generator))
 
 
-def difference(array, k=1):
+def difference(array: list, k: int = 1) -> list:
     """
-    Calculate l[n] - l[n-k]
+    简单差分函数.
+
+    Example::
+
+        >>> difference([0, 1, 3, 6, 10], 0)
+        [0, 0, 0, 0, 0]
+
+        >>> difference([0, 1, 3, 6, 10], 1)
+        [1, 2, 3, 4]
+
+        >>> difference([0, 1, 3, 6, 10], 2)
+        [3, 5, 7]
     """
     if (len(array) - k) < 1:
         raise ValueError()

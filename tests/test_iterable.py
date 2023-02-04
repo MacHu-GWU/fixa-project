@@ -220,10 +220,10 @@ def test_shift_and_pad():
 
 
 def test_difference():
-    assert iterable.difference([1, 2, 3], 0) == [0, 0, 0]
-    assert iterable.difference([1, 2, 3], 1) == [1, 1]
-    assert iterable.difference([1, 2, 3], 2) == [
-        2,
+    assert iterable.difference([0, 1, 3, 6, 10], 0) == [0, 0, 0, 0, 0]
+    assert iterable.difference([0, 1, 3, 6, 10], 1) == [1, 2, 3, 4]
+    assert iterable.difference([0, 1, 3, 6, 10], 2) == [
+        3, 5, 7
     ]
 
     with pytest.raises(ValueError):
