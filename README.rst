@@ -51,8 +51,7 @@
 
 Welcome to ``fixa`` Documentation
 ==============================================================================
-
-Documentation for ``fixa``.
+Like the Ikea FIXA, it is my toolbox to fix things.
 
 
 .. _install:
