@@ -15,6 +15,16 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.3.1 (2023-02-06)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- ``nest_logger.py`` new features:
+    - allow to customize pipe character
+    - ``nested()`` context manager is now smarter
+    - ``disabled()`` context manager can temporarily disable the logger
+
+
 0.2.1 (2023-02-04)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
