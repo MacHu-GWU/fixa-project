@@ -2,66 +2,101 @@
 
 import pytest
 import time
-from fixa.nest_logger import logger, ruler, AlignEnum
+from fixa.nest_logger import (
+    format_line,
+    format_ruler,
+    AlignEnum,
+    logger,
+)
 
 
-def test_ruler():
+def setup_module(module):
     print("")
 
-    ruler("Hello")
-    ruler("Hello", length=40)
-    ruler("Hello", char="=")
-    ruler("Hello", corner="+")
-    ruler("Hello", align=AlignEnum.left)
-    ruler("Hello", align=AlignEnum.right)
-    ruler("Hello", left_padding=10)
-    ruler("Hello", right_padding=10)
+
+def test_format_line():
+    assert format_line("hello") == "| hello"
+    assert format_line("hello", nest=1) == "| | hello"
+    assert format_line("hello", nest=1, _pipes=["| ", "# "]) == "| # hello"
+
+    assert format_line("hello", indent=1) == "|   hello"
+    assert format_line("hello", indent=1, nest=1) == "| |   hello"
+    assert format_line("hello", indent=1, nest=1, _pipes=["| ", "# "]) == "| #   hello"
 
 
-def test_nested_logger_nested_context_manager():
+def test_format_ruler():
+    assert format_ruler("Hello", length=40) == (
+        "---------------- Hello -----------------"
+    )
+    assert format_ruler("Hello", length=20) == ("------ Hello -------")
+    assert format_ruler("Hello", char="=", length=40) == (
+        "================ Hello ================="
+    )
+    assert format_ruler("Hello", corner="+", length=40) == (
+        "+--------------- Hello ----------------+"
+    )
+    assert format_ruler("Hello", align=AlignEnum.left, length=40) == (
+        "----- Hello ----------------------------"
+    )
+    assert format_ruler("Hello", align=AlignEnum.right, length=40) == (
+        "---------------------------- Hello -----"
+    )
+    assert format_ruler("Hello", left_padding=3, align=AlignEnum.left, length=40) == (
+        "--- Hello ------------------------------"
+    )
+    assert format_ruler("Hello", right_padding=3, align=AlignEnum.right, length=40) == (
+        "------------------------------ Hello ---"
+    )
+
+
+def test_nested_context_manager():
+    print("")
+    logger.ruler("section 1")
+    logger.info("hello 1")
+    with logger.nested():
+        logger.ruler("section 1.1")
+        logger.info("hello 1.1")
+        with logger.nested():
+            logger.ruler("section 1.1.1")
+            logger.info("hello 1.1.1")
+            logger.ruler("section 1.1.1")
+        logger.ruler("section 1.1")
+    logger.ruler("section 1")
+
+
+def test_disabled_context_manager():
     print("")
 
-    with logger.nested(0):
-        logger.ruler("nested 0 start")
-        logger.info("nested 0")
-
-        with logger.nested(1):
-            logger.ruler("nested 1 start")
-            logger.info("nested 1")
-            logger.ruler("nested 1 end")
-
-        logger.ruler("nested 0 end")
+    logger.info("a")
+    with logger.disabled(
+        disable=True,
+        # disable=False,
+    ):
+        logger.info("b")
+    logger.info("c")
 
 
-def test_nested_logger_pretty_log_decorator():
-    print("")
-
-    @logger.pretty_log(nest=1)
-    def my_func2(name: str):
+def test_pretty_log_decorator():
+    @logger.pretty_log(pipe="🏭")
+    def run_build():
         time.sleep(1)
-        logger.info(f"{name} do something in my func 2")
+        logger.info("run build")
 
-    @logger.pretty_log()
-    def my_func1(name: str):
+    @logger.pretty_log(pipe="🧪")
+    def run_test():
         time.sleep(1)
-        logger.info(f"{name} do something in my func 1")
-        my_func2(name="bob")
+        logger.info("run test")
+        with logger.nested():
+            run_build()
 
-    my_func1(name="alice")
-
-
-def test_nested_logger_pretty_log_decorator_error_case():
-    print("")
-
-    @logger.pretty_log()
-    def my_func():
+    @logger.pretty_log(pipe="🚀")
+    def run_deploy():
         time.sleep(1)
-        logger.info(f"start doing something ...")
-        raise Exception
-        logger.info(f"end doing something ...")
+        logger.info("run deploy")
+        with logger.nested():
+            run_test()
 
-    with pytest.raises(Exception):
-        my_func()
+    run_deploy()
 
 
 if __name__ == "__main__":
