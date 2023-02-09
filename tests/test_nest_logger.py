@@ -6,8 +6,10 @@ from fixa.nest_logger import (
     format_line,
     format_ruler,
     AlignEnum,
-    logger,
+    NestedLogger,
 )
+
+logger = NestedLogger(name="nested_logger_unit_test")
 
 
 def setup_module(module):
