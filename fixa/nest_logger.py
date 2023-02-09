@@ -460,6 +460,3 @@ class NestedLogger:
             if disable:
                 for handler in existing_handlers:
                     self._logger.handlers.append(handler)
-
-
-logger = NestedLogger()
