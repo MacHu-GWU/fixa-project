@@ -126,9 +126,9 @@ class TimeTimer(BaseTimer):
 class SerialTimer(object):
     def __init__(self, timer_klass: T.Type[BaseTimer] = TimeTimer):
         self.timer_klass = timer_klass
-        self.current_timer = None
-        self.last_stopped_timer = None
-        self.history_stopped_timer = list()
+        self.current_timer: T.Optional[BaseTimer] = None
+        self.last_stopped_timer: T.Optional[BaseTimer] = None
+        self.history_stopped_timer: T.List[BaseTimer] = list()
 
     def start(self, title: str = None, display: bool = True):
         self.current_timer = self.timer_klass(title, display)
