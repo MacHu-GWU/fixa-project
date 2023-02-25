@@ -2,10 +2,33 @@
 
 """
 Enhance the default logger, print visual ascii effect for better readability.
+Please see the ``examples/nested_logger.ipynb`` for more usage examples.
+
 Usage::
-    from logger import logger
-.. note::
-    This module is "ZERO-DEPENDENCY".
+
+    from fixa.nest_logger import NestedLogger
+
+    logger = NestedLogger()
+
+    @logger.start_and_end(
+        msg="My Function",
+        start_emoji="🟢",
+        end_emoji="🔴",
+        pipe="📦",
+    )
+    def my_func(name: str):
+        time.sleep(1)
+        logger.info(f"{name} do something in my func")
+
+    my_func(name="alice")
+
+The Output looks like::
+
+    [User 2023-02-25 11:02:05] +----- ⏱ 🟢 Start 'My Function 1' ----------------------------------------------+
+    [User 2023-02-25 11:02:05] 📦
+    [User 2023-02-25 11:02:06] 📦 alice do something in my func 1
+    [User 2023-02-25 11:02:06] 📦
+    [User 2023-02-25 11:02:06] +----- ⏰ 🔴 End 'My Function 1', elapsed = 1.01 sec ----------------------------+
 """
 
 import typing as T
@@ -181,7 +204,10 @@ class NestedLogger:
         else:
             self._logger = logger
 
+        # ``_nest`` stores the current level of nesting
         self._nest = 0
+        # ``_pipes`` is a first in last out stack data structure that stores
+        # the list of pipe character for different level of nesting
         self._pipes = [
             DEFAULT_PIPE,
         ]
@@ -341,7 +367,7 @@ class NestedLogger:
         pipe: T.Optional[str] = None,
     ):
         """
-        Pretty print ruler when a function start, error, end.
+        A decorator that pretty print ruler when a function start, error, end.
 
         ``start_msg``, ``error_msg`` and ``end_msg`` are string template.
         the ``{func_name}`` will become the function you are decorating,
@@ -376,9 +402,9 @@ class NestedLogger:
             [User] | |
             [User] | | bob do something in my func 2
             [User] | |
-            [User] | +----- End my_func2(), elapsed = 1 sec -------------------+
+            [User] | +----- End my_func2(), elapsed = 1.00 sec ----------------+
             [User] |
-            [User] +----- End my_func1(), elapsed = 2 sec ---------------------+
+            [User] +----- End my_func1(), elapsed = 2.00 sec ------------------+
         """
 
         @decohints
@@ -445,6 +471,57 @@ class NestedLogger:
             return wrapper
 
         return deco
+
+    def start_and_end(
+        self,
+        msg: str,
+        start_emoji: str = "",
+        end_emoji: str = "",
+        pipe: str = "| ",
+    ):
+        """
+        A simplified version of the ``pretty_log`` decorator. Visually print
+        the start and the end of a function.
+
+        Example:
+
+        .. code-block:: python
+
+            @logger.start_and_end(
+                msg="My Function 1",
+                start_emoji="🟢",
+                end_emoji="🔴",
+                pipe="📦",
+            )
+            def my_func1(name: str):
+                time.sleep(1)
+                logger.info(f"{name} do something in my func 1")
+
+            my_func1(name="alice")
+
+        The output looks like::
+
+            [User] +----- ⏱ 🟢 Start 'My Function 1' --------------------------+
+            [User] 📦
+            [User] 📦 alice do something in my func 1
+            [User] 📦
+            [User] +----- ⏰ 🔴 End 'My Function 1', elapsed = 1.01 sec --------+
+
+        :param msg: indicate the name of the function
+        :param start_emoji: custom emoji for the start message
+        :param end_emoji: custom emoji for the end message
+        :param pipe: custom pipe character
+        :return:
+        """
+        if start_emoji and (not start_emoji.endswith(" ")):
+            start_emoji = start_emoji + " "
+        if end_emoji and (not end_emoji.endswith(" ")):
+            end_emoji = end_emoji + " "
+        return self.pretty_log(
+            start_msg=f"⏱ {start_emoji}Start {msg!r}",
+            end_msg=f"⏰ {end_emoji}End {msg!r}, elapsed = {{elapsed:.2f}} sec",
+            pipe=pipe,
+        )
 
     @contextlib.contextmanager
     def disabled(

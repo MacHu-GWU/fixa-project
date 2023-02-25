@@ -79,6 +79,8 @@ def test_disabled_context_manager():
 
 
 def test_pretty_log_decorator():
+    print("")
+
     @logger.pretty_log(pipe="🏭")
     def run_build():
         time.sleep(1)
@@ -99,6 +101,21 @@ def test_pretty_log_decorator():
             run_test()
 
     run_deploy()
+
+
+def test_block():
+    print("")
+    @logger.start_and_end(
+        msg="My Function 1",
+        start_emoji="🟢",
+        end_emoji="🔴",
+        pipe="📦",
+    )
+    def my_func1(name: str):
+        time.sleep(1)
+        logger.info(f"{name} do something in my func 1")
+
+    my_func1(name="alice")
 
 
 if __name__ == "__main__":
