@@ -41,6 +41,11 @@ def test_hash_file():
     with pytest.raises(ValueError):
         hashes.of_file(a_file, chunk_size=0)
 
+    id1 = hashes.of_file(a_file)
+    with open(a_file, "rb") as f:
+        id2 = hashes.of_file_object(f)
+    assert id1 == id2
+
 
 def test_hash_anything():
     """

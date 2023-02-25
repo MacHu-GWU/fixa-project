@@ -23,6 +23,7 @@ Ref:
 import typing as T
 import enum
 import hashlib
+from pathlib import Path
 
 
 class HashAlgoEnum(str, enum.Enum):
@@ -163,7 +164,7 @@ class Hashes:
 
     def of_file(
         self,
-        abspath: str,
+        abspath: T.Union[str, Path, T.Any],
         nbytes: int = 0,
         chunk_size: int = 1024,
         algo: T.Optional[HashAlgoEnum] = None,
@@ -172,6 +173,24 @@ class Hashes:
         """
         Return hash value of a file, or only a piece of a file
         """
+        p = Path(abspath)
+        with p.open("rb") as f:
+            return self.of_file_object(
+                f,
+                nbytes=nbytes,
+                chunk_size=chunk_size,
+                algo=algo,
+                hexdigest=hexdigest,
+            )
+
+    def of_file_object(
+        self,
+        f,
+        nbytes: int = 0,
+        chunk_size: int = 4096,
+        algo: T.Optional[HashAlgoEnum] = None,
+        hexdigest: T.Optional[bool] = None,
+    ) -> T.Union[str, bytes]:
         if nbytes < 0:
             raise ValueError("chunk_size cannot smaller than 0")
         if chunk_size < 1:
@@ -181,26 +200,25 @@ class Hashes:
 
         m = self._construct(algo)
 
-        with open(abspath, "rb") as f:
-            if nbytes:  # use first n bytes only
-                have_reads = 0
-                while True:
-                    have_reads += chunk_size
-                    if have_reads > nbytes:
-                        n = nbytes - (have_reads - chunk_size)
-                        if n:
-                            data = f.read(n)
-                            m.update(data)
-                        break
-                    else:
-                        data = f.read(chunk_size)
+        if nbytes:  # use first n bytes only
+            have_reads = 0
+            while True:
+                have_reads += chunk_size
+                if have_reads > nbytes:
+                    n = nbytes - (have_reads - chunk_size)
+                    if n:
+                        data = f.read(n)
                         m.update(data)
-            else:  # use entire content
-                while True:
+                    break
+                else:
                     data = f.read(chunk_size)
-                    if not data:
-                        break
                     m.update(data)
+        else:  # use entire content
+            while True:
+                data = f.read(chunk_size)
+                if not data:
+                    break
+                m.update(data)
         return self._digest(m, hexdigest)
 
 
