@@ -60,7 +60,7 @@ Integration options:
 Utility libraries are often used extensively within a project, and because they are not often fundamental to the architecture of the application, simplicity and stability may take precedence over version recency. In these cases, developers can:
 
 - Copy the whole fix package into a project.
-- Copy just the ***.py file that a project requires.
+- Copy just the ``***.py`` file that a project requires.
 
 Modules and Examples:
 
