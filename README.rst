@@ -51,7 +51,7 @@
 
 Welcome to ``fixa`` Documentation
 ==============================================================================
-Like the Ikea FIXA, it is my Python toolbox for small projects.
+Like the `Ikea FIXA <https://www.ikea.com/us/en/p/fixa-17-piece-tool-kit-00169254/>`_, it is my Python toolbox for small projects.
 
 This library is inspired by `boltons <https://boltons.readthedocs.io/en/latest/>`_.
 
