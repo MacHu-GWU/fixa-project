@@ -15,6 +15,17 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.4.1 (2023-02-25)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``nested_logger.block``
+
+**Miscellaneous**
+
+- add more jupyter notebook examples
+
+
 0.3.2 (2023-02-08)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**

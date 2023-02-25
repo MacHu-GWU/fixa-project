@@ -51,7 +51,22 @@
 
 Welcome to ``fixa`` Documentation
 ==============================================================================
-Like the Ikea FIXA, it is my toolbox to fix things.
+Like the Ikea FIXA, it is my Python toolbox for small projects.
+
+This library is inspired by `boltons <https://boltons.readthedocs.io/en/latest/>`_.
+
+Integration options:
+
+Utility libraries are often used extensively within a project, and because they are not often fundamental to the architecture of the application, simplicity and stability may take precedence over version recency. In these cases, developers can:
+
+- Copy the whole fix package into a project.
+- Copy just the ***.py file that a project requires.
+
+Modules and Examples:
+
+- `hashes <./examples/hashes.ipynb>`_
+- `nested_logger <./examples/nested_logger.ipynb>`_
+- `timer <./examples/timer.ipynb>`_
 
 
 .. _install:
