@@ -100,7 +100,7 @@ class TestBetterStrEnum:
             StatusEnum.ensure_str("succeeded")
 
     def test_value_list(self):
-        assert StatusEnum.value_list() == ["SUCCESS", "FAILED"]
+        assert StatusEnum.value_list() == ["SUCCEEDED", "FAILED"]
 
 
 if __name__ == "__main__":
