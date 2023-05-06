@@ -91,6 +91,7 @@ def rand_pwd(length: int = 12, special_char: bool = True) -> str:
     if length < 8:
         raise ValueError("minimal password length is 8!")
 
+    # first letter always letter
     first = random.choice(CHARSET_PASSWORD_LOWER + CHARSET_PASSWORD_UPPER)
     chars = [
         random.choice(CHARSET_PASSWORD_LOWER),

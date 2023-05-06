@@ -14,12 +14,17 @@ def test_rnd():
     rand_alphastr(12, lower=False, upper=True)
     rand_alphastr(12, lower=True, upper=False)
 
+    with pytest.raises(Exception):
+        rand_alphastr(12, lower=False, upper=False)
+
     rand_pwd(12)
     rand_pwd(12, special_char=False)
 
+    with pytest.raises(ValueError):
+        rand_pwd(4)
+
 
 if __name__ == "__main__":
-    import os
+    from fixa.tests import run_cov_test
 
-    basename = os.path.basename(__file__)
-    pytest.main([basename, "-s", "--tb=native"])
+    run_cov_test(__file__, "fixa.rnd", preview=False)

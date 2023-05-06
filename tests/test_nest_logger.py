@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import pytest
 import time
 from fixa.nest_logger import (
     format_line,
@@ -119,7 +118,6 @@ def test_block():
 
 
 if __name__ == "__main__":
-    import os
+    from fixa.tests import run_cov_test
 
-    basename = os.path.basename(__file__)
-    pytest.main([basename, "-s", "--tb=native"])
+    run_cov_test(__file__, "fixa.nest_logger", preview=False)

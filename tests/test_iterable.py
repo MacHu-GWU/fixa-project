@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import time
 import pytest
+import time
 from fixa import iterable
 from collections import OrderedDict
 
@@ -169,12 +169,8 @@ def test_cycle_slice():
 
     assert iterable.cycle_slice(array, 5, -1) == [1, 2]
 
-    array = [
-        0,
-    ]
-    assert iterable.cycle_slice(array, 1, 2) == [
-        0,
-    ]
+    array = [0]
+    assert iterable.cycle_slice(array, 1, 2) == [0]
 
     with pytest.raises(ValueError):
         iterable.cycle_slice([], 1, 2)
@@ -203,6 +199,7 @@ def test_shift_and_trim():
     assert iterable.shift_and_trim(array, -1) == [1, 2]
     assert iterable.shift_and_trim(array, 3) == []
     assert iterable.shift_and_trim(array, -3) == []
+    assert iterable.shift_and_trim([], 3) == []
 
 
 def test_shift_and_pad():
@@ -218,13 +215,13 @@ def test_shift_and_pad():
     assert iterable.shift_and_pad(array, -3) == [2, 2, 2]
     assert iterable.shift_and_pad(array, -3, None) == [None, None, None]
 
+    assert iterable.shift_and_pad([], 3) == []
+
 
 def test_difference():
     assert iterable.difference([0, 1, 3, 6, 10], 0) == [0, 0, 0, 0, 0]
     assert iterable.difference([0, 1, 3, 6, 10], 1) == [1, 2, 3, 4]
-    assert iterable.difference([0, 1, 3, 6, 10], 2) == [
-        3, 5, 7
-    ]
+    assert iterable.difference([0, 1, 3, 6, 10], 2) == [3, 5, 7]
 
     with pytest.raises(ValueError):
         iterable.difference([1, 2, 3], -1)
@@ -234,7 +231,6 @@ def test_difference():
 
 
 if __name__ == "__main__":
-    import os
+    from fixa.tests import run_cov_test
 
-    basename = os.path.basename(__file__)
-    pytest.main([basename, "-s", "--tb=native"])
+    run_cov_test(__file__, "fixa.iterable", preview=False)

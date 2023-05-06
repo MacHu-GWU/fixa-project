@@ -231,7 +231,7 @@ def running_window(lst: list, size: int):
             yield list(fifo)
 
 
-def cycle_running_window(iterable, size):
+def cycle_running_window(lst: list, size: int) -> list:
     """
     Generate n-size cycle running window.
 
@@ -249,13 +249,13 @@ def cycle_running_window(iterable, size):
 
     循环位移滑窗函数.
     """
-    if size > len(iterable):
+    if size > len(lst):
         raise ValueError("size can not be greater than length of iterable.")
 
     fifo = collections.deque(maxlen=size)
-    cycle = itertools.cycle(iterable)
+    cycle = itertools.cycle(lst)
     counter = itertools.count(1)
-    length = len(iterable)
+    length = len(lst)
     for i in cycle:
         fifo.append(i)
         if len(fifo) == size:
@@ -265,7 +265,7 @@ def cycle_running_window(iterable, size):
 
 
 # --- Cycle ---
-def cycle_slice(sliceable: list, start: int, end: int):
+def cycle_slice(sliceable: list, start: int, end: int) -> list:
     """
     Given a list, return the right-hand cycle direction slice from start to end.
 
@@ -278,8 +278,6 @@ def cycle_slice(sliceable: list, start: int, end: int):
         >>> cycle_slice(array, 3, 1) # from array[3] to array[1]
         [3, 0]
     """
-    if type(sliceable) != list:
-        sliceable = list(sliceable)
     length = len(sliceable)
 
     if length == 0:
@@ -329,7 +327,7 @@ def cycle_dist(
 
 
 # --- Shift ---
-def cyclic_shift(array: list, shift: int):
+def cyclic_shift(array: list, shift: int) -> list:
     """
 
     :params array: list like iterable object
@@ -351,7 +349,7 @@ def cyclic_shift(array: list, shift: int):
     return array[-shift:] + array[:-shift]
 
 
-def shift_and_trim(array: list, shift: int):
+def shift_and_trim(array: list, shift: int) -> list:
     """
     Shift and trim unneeded item.
 
@@ -391,7 +389,7 @@ def shift_and_trim(array: list, shift: int):
         return list(array)
 
 
-def shift_and_pad(array: list, shift: int, pad="__null__"):
+def shift_and_pad(array: list, shift: int, pad: T.Any = "__null__") -> list:
     """
     Shift and pad with item.
 
@@ -453,8 +451,8 @@ def shift_and_pad(array: list, shift: int, pad="__null__"):
             ]
             * -shift
         )
-    else:  # Never get in this logic
-        raise Exception
+    else:  # pragma: no cover
+        raise NotImplementedError
 
 
 def size_of_generator(generator: T.Iterable, memory_efficient=True) -> int:

@@ -2,12 +2,10 @@
 # for more info: https://coverage.readthedocs.io/en/latest/config.html
 [run]
 omit =
-    fixa/_version.py
-    fixa/cli.py
-    fixa/pkg/*
     fixa/docs/*
     fixa/tests/*
-    fixa/handlers/*
+    fixa/_version.py
+    fixa/pytest_cov_helper.py
 
 [report]
 # Regexes for lines to exclude from consideration

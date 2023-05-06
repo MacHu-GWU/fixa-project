@@ -18,23 +18,30 @@ def setup_module(module):
 
 class TestDateTimeTime:
     def test(self):
+        display = False
         # usage1
-        timer = DateTimeTimer(title="basic DateTimeTimer test")
+        timer = DateTimeTimer(title="basic DateTimeTimer test", display=display)
         sleep_random_time()
         timer.end()
 
+        str(timer)
+
         # usage2
-        with DateTimeTimer(title="basic DateTimeTimer test") as timer:
+        with DateTimeTimer(title="basic DateTimeTimer test", display=display) as timer:
             sleep_random_time()
 
         # usage3
-        timer = DateTimeTimer(title="basic DateTimeTimer test", start=False)
+        timer = DateTimeTimer(
+            title="basic DateTimeTimer test", start=False, display=display
+        )
         timer.start()
         sleep_random_time()
         timer.end()
 
         # usage4
-        with DateTimeTimer(title="basic DateTimeTimer test", start=False) as timer:
+        with DateTimeTimer(
+            title="basic DateTimeTimer test", start=False, display=display
+        ) as timer:
             sleep_random_time()
 
     def test_avg_error(self):
@@ -64,21 +71,22 @@ class TestTimeTimer:
 
 class TestSerialTimer:
     def test(self):
+        display = False
         stimer = SerialTimer()
         with pytest.raises(RuntimeError):
             stimer.end()
 
-        stimer.start(title="first measure")
+        stimer.start(title="first measure", display=display)
         sleep_random_time()
         stimer.end()
         with pytest.raises(RuntimeError):
             stimer.end()
 
-        stimer.start(title="second measure")
+        stimer.start(title="second measure", display=display)
         sleep_random_time()
-        stimer.click(title="third measure")
+        stimer.click(title="third measure", display=display)
         sleep_random_time()
-        stimer.click(title="fourth measure")
+        stimer.click(title="fourth measure", display=display)
         stimer.end()
 
         assert isinstance(stimer.last, BaseTimer)
@@ -88,19 +96,22 @@ class TestSerialTimer:
 
 
 def test_timeit():
+    display = False
+
     def for_loop(n):
         for _ in range(n):
             pass
 
     n = 10**6
     number = 10
+
     # multiple time run total elapsed
     elapsed_measured_by_timeit = timeit.timeit(
         timeit_wrapper(for_loop, n), number=number
     )
 
-    #
-    with DateTimeTimer(display=False) as timer:
+    # measure by DateTimeTimer
+    with DateTimeTimer(display=display) as timer:
         for _ in range(number):
             for_loop(n)
     elapsed_measured_by_timer = timer.elapsed
@@ -115,7 +126,6 @@ def test_timeit():
 
 
 if __name__ == "__main__":
-    import os
+    from fixa.tests import run_cov_test
 
-    basename = os.path.basename(__file__)
-    pytest.main([basename, "-s", "--tb=native"])
+    run_cov_test(__file__, "fixa.timer", preview=False)

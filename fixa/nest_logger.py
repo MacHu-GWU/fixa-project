@@ -58,6 +58,9 @@ def create_logger(
     stream_handler.setFormatter(formatter)
 
     logger.addHandler(stream_handler)
+
+    logger.parent = None  # disable handler from parent logger, only use stream handler
+
     return logger
 
 
