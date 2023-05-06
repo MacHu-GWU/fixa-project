@@ -15,6 +15,20 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.5.1 (TODO)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``better_pathlib``
+- add ``dataclass_dataframe``
+- add ``pytest_cov_helper``
+- add ``better_enum``
+
+**Minor Improvements**
+
+- improve code coverage test
+
+
 0.4.1 (2023-02-25)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
