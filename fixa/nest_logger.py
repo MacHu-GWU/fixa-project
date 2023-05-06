@@ -72,7 +72,7 @@ def encode_pipe(pipe: str) -> str:
         return pipe + " "
     elif len(pipe) == 2 and pipe[1] == " ":
         return pipe
-    else:
+    else: # pragma: no cover
         raise ValueError
 
 
@@ -204,7 +204,7 @@ class NestedLogger:
                 log_format=log_format,
                 datetime_format=datetime_format,
             )
-        else:
+        else: # pragma: no cover
             self._logger = logger
 
         # ``_nest`` stores the current level of nesting
@@ -337,7 +337,7 @@ class NestedLogger:
 
         if pipe is None:
             self._pipes.append(DEFAULT_PIPE)
-        else:
+        else: # pragma: no cover
             self._pipes.append(encode_pipe(pipe))
 
     def _nested_end(self):

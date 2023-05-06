@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 import time
 from fixa.nest_logger import (
     format_line,
@@ -102,8 +103,24 @@ def test_pretty_log_decorator():
     run_deploy()
 
 
+    @logger.pretty_log()
+    def this_wont_work():
+        logger.info("run this_wont_work")
+        raise Exception("something wrong")
+
+    @logger.pretty_log()
+    def outter_may_work():
+        logger.info("run outter_may_work")
+        with logger.nested():
+            this_wont_work()
+
+    with pytest.raises(Exception):
+        outter_may_work()
+
+
 def test_block():
     print("")
+
     @logger.start_and_end(
         msg="My Function 1",
         start_emoji="🟢",
