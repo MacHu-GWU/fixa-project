@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
+Usage example:
+
+.. code-block:: python
+
+    from fixa.os_platform import IS_WINDOWS, IS_MACOS, IS_LINUX
+
 Reference:
 
 - https://docs.python.org/3/library/sys.html#sys.platform

@@ -1,5 +1,23 @@
 # -*- coding: utf-8 -*-
 
+"""
+Usage example:
+
+.. code-block:: python
+
+    from fixa.runtime import (
+        IS_LOCAL,
+        IS_CODEBUILD,
+        IS_JENKINS,
+        IS_CI,
+        IS_AWS_LAMBDA,
+        IS_AWS_EC2,
+        IS_AWS_BATCH,
+        IS_AWS_GLUE,
+        IS_AWS_CLOUD9,
+    )
+"""
+
 import os
 
 IS_LOCAL = False

@@ -1,10 +1,51 @@
 # -*- coding: utf-8 -*-
 
+"""
+Improve the original enum module.
+"""
+
 import typing as T
 import enum
 
 
 class BetterIntEnum(int, enum.Enum):
+    """
+    Example:
+
+    .. code-block:: python
+
+        >>> class CodeEnum(BetterIntEnum):
+        ...     succeeded = 1
+        ...     failed = 0
+        >>> CodeEnum.get_by_name("succeeded")
+        <CodeEnum.succeeded: 1>
+        >>> CodeEnum.get_by_value(1)
+        <CodeEnum.succeeded: 1>
+        >>> CodeEnum.is_valid_name("succeeded")
+        True
+        >>> CodeEnum.is_valid_name("SUCCEEDED")
+        False
+        >>> CodeEnum.is_valid_name(1)
+        False
+        >>> CodeEnum.is_valid_value("succeeded")
+        False
+        >>> CodeEnum.is_valid_value("SUCCEEDED")
+        False
+        >>> CodeEnum.is_valid_value(1)
+        True
+        >>> CodeEnum.ensure_is_valid_value(1)
+        >>> CodeEnum.ensure_is_valid_value("succeeded")
+        Traceback (most recent call last):
+        ...
+        ValueError: Invalid CodeEnum: 'succeeded'
+        >>> CodeEnum.ensure_int(1)
+        1
+        >>> CodeEnum.ensure_int(CodeEnum.succeeded)
+        1
+        >>> isinstance(CodeEnum.ensure_int(1), int)
+        True
+    """
+
     @classmethod
     def get_by_name(cls, name: str):
         return cls[name]
@@ -47,7 +88,38 @@ class BetterIntEnum(int, enum.Enum):
 
 
 class BetterStrEnum(str, enum.Enum):
-    """ """
+    """
+    Example:
+
+    .. code-block:: python
+
+        >>> class StatusEnum(BetterStrEnum):
+        ...     succeeded = "SUCCEEDED"
+        ...     failed = "FAILED"
+        >>> StatusEnum.get_by_name("succeeded")
+        <StatusEnum.succeeded: 'SUCCEEDED'>
+        >>> StatusEnum.get_by_value("SUCCEEDED")
+        <StatusEnum.succeeded: 'SUCCEEDED'>
+        >>> StatusEnum.is_valid_name("succeeded")
+        True
+        >>> StatusEnum.is_valid_name("SUCCEEDED")
+        False
+        >>> StatusEnum.is_valid_value("succeeded")
+        False
+        >>> StatusEnum.is_valid_value("SUCCEEDED")
+        True
+        >>> StatusEnum.ensure_is_valid_value("SUCCEEDED")
+        >>> StatusEnum.ensure_is_valid_value("succeeded")
+        Traceback (most recent call last):
+        ...
+        ValueError: Invalid StatusEnum: 'succeeded'
+        >>> StatusEnum.ensure_str("SUCCEEDED")
+        'SUCCEEDED'
+        >>> StatusEnum.ensure_str(StatusEnum.succeeded)
+        'SUCCEEDED'
+        >>> isinstance(StatusEnum.ensure_str("SUCCEEDED"), str)
+        True
+    """
 
     @classmethod
     def get_by_name(cls, name: str):

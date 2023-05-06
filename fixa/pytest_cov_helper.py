@@ -30,15 +30,66 @@ def run_cov_test(
     is_folder: bool = False,
 ):
     """
-    A simple wrapper around pytest + coverage cli command. Allow you to run
+    The pytest-cov plugin gives you the coverage for entire project. What if
+    I want run per-module test independently and get per-module coverage?
+
+    This is a simple wrapper around pytest + coverage cli command. Allow you to run
     coverage test from Python script and set the code coverage measurement scope.
 
-    :param bin_pytest: the path to pytest executable
+    Usage example:
+
+    suppose you have a source code folder structure like this::
+
+        /dir_git_repo/
+        /dir_git_repo/my_library
+        /dir_git_repo/my_library/__init__.py
+        /dir_git_repo/my_library/module1.py
+        /dir_git_repo/my_library/module2.py
+
+    In your module 1 unit test script, you can do this:
+
+    .. code-block:: python
+
+        from my_library.module1 import func1, func2
+
+        def test_func1():
+            pass
+
+        def test_func2():
+            pass
+
+        if __name__ == "__main__":
+            from fixa.pytest_cov_helper import run_cov_test
+
+            run_cov_test(
+                script=__file__,
+                module="my_library.module1", # test scope is the module1.py
+                root_dir="/path/to/dir_git_repo",
+                htmlcov_dir="/path/to/dir_git_repo/htmlcov",
+            )
+
+    In your all modules unit test script, you can do this:
+
+    .. code-block:: python
+
+        if __name__ == "__main__":
+            from fixa.pytest_cov_helper import run_cov_test
+
+            run_cov_test(
+                script=__file__,
+                module="my_library", # test scope is the my_library/
+                root_dir="/path/to/dir_git_repo",
+                htmlcov_dir="/path/to/dir_git_repo/htmlcov",
+                is_folder=True, # my_library is a folder
+            )
+
     :param script: the path to test script
     :param module: the dot notation to the python module you want to calculate
         coverage
     :param root_dir: the dir to dump coverage results binary file
     :param htmlcov_dir: the dir to dump HTML output
+    :param preview: whether to open the HTML output in web browser after the test
+    :param is_folder: whether the module is a folder
 
     Reference:
 
@@ -47,6 +98,8 @@ def run_cov_test(
     bin_pytest = Path(sys.executable).parent / "pytest"
     if is_folder:
         script = f"{Path(script).parent}"
+    if module.endswith(".py"):  # pragma: no cover
+        module = module[:-3]
     args = [
         f"{bin_pytest}",
         "-s",
