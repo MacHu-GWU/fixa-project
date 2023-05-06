@@ -6,6 +6,8 @@ omit =
     fixa/tests/*
     fixa/_version.py
     fixa/pytest_cov_helper.py
+    fixa/os_platform.py
+    fixa/runtime.py
 
 [report]
 # Regexes for lines to exclude from consideration

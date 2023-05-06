@@ -23,6 +23,8 @@ Backlog (TODO)
 - add ``dataclass_dataframe``
 - add ``pytest_cov_helper``
 - add ``better_enum``
+- add ``runtime``
+- add ``os_platform``
 
 **Minor Improvements**
 
