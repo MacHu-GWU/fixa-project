@@ -25,6 +25,7 @@ Backlog (TODO)
 - add ``better_enum``
 - add ``runtime``
 - add ``os_platform``
+- add ``git_cli``
 
 **Minor Improvements**
 
