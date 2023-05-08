@@ -83,7 +83,11 @@ class BetterIntEnum(int, enum.Enum):
             return cls(value).value
 
     @classmethod
-    def value_list(cls) -> T.List[int]:
+    def get_names(cls) -> T.List[str]:
+        return [i.name for i in cls]
+
+    @classmethod
+    def get_values(cls) -> T.List[int]:
         return [i.value for i in cls]
 
 
@@ -158,5 +162,9 @@ class BetterStrEnum(str, enum.Enum):
             return cls(value).value
 
     @classmethod
-    def value_list(cls) -> T.List[str]:
+    def get_names(cls) -> T.List[str]:
+        return [i.name for i in cls]
+
+    @classmethod
+    def get_values(cls) -> T.List[str]:
         return [i.value for i in cls]

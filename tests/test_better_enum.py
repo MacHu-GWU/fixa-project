@@ -15,6 +15,7 @@ class CodeEnum(BetterIntEnum):
 class TestBetterIntEnum:
     def test(self):
         assert CodeEnum.succeeded == 1
+        assert 0 < CodeEnum.succeeded < 2
         assert (CodeEnum.succeeded + 1) == 2
         assert {CodeEnum.succeeded, CodeEnum.failed} == {0, 1}
 
@@ -52,8 +53,9 @@ class TestBetterIntEnum:
         with pytest.raises(ValueError):
             CodeEnum.ensure_int(9)
 
-    def test_value_list(self):
-        assert CodeEnum.value_list() == [1, 0]
+    def test_get_names_values(self):
+        assert CodeEnum.get_names() == ["succeeded", "failed"]
+        assert CodeEnum.get_values() == [1, 0]
 
 
 class StatusEnum(BetterStrEnum):
@@ -63,6 +65,7 @@ class StatusEnum(BetterStrEnum):
 
 class TestBetterStrEnum:
     def test(self):
+        assert StatusEnum.succeeded.replace("SUC", "") == "CEEDED"
         assert StatusEnum.succeeded == "SUCCEEDED"
         assert f"it is {StatusEnum.succeeded}" == "it is SUCCEEDED"
         assert {StatusEnum.succeeded, StatusEnum.failed} == {"SUCCEEDED", "FAILED"}
@@ -100,7 +103,8 @@ class TestBetterStrEnum:
             StatusEnum.ensure_str("succeeded")
 
     def test_value_list(self):
-        assert StatusEnum.value_list() == ["SUCCEEDED", "FAILED"]
+        assert StatusEnum.get_names() == ["succeeded", "failed"]
+        assert StatusEnum.get_values() == ["SUCCEEDED", "FAILED"]
 
 
 if __name__ == "__main__":
