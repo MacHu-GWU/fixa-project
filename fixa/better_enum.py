@@ -8,7 +8,25 @@ import typing as T
 import enum
 
 
-class BetterIntEnum(int, enum.Enum):
+class Mixin:
+    @classmethod
+    def get_by_name(cls, name: str):
+        return cls[name]
+
+    @classmethod
+    def is_valid_name(cls, name: str) -> bool:
+        try:
+            _ = cls[name]
+            return True
+        except KeyError:
+            return False
+
+    @classmethod
+    def get_names(cls) -> T.List[str]:
+        return [i.name for i in cls]
+
+
+class BetterIntEnum(Mixin, int, enum.Enum):
     """
     Example:
 
@@ -47,20 +65,8 @@ class BetterIntEnum(int, enum.Enum):
     """
 
     @classmethod
-    def get_by_name(cls, name: str):
-        return cls[name]
-
-    @classmethod
     def get_by_value(cls, value: int):
         return cls(value)
-
-    @classmethod
-    def is_valid_name(cls, name: str) -> bool:
-        try:
-            _ = cls[name]
-            return True
-        except KeyError:
-            return False
 
     @classmethod
     def is_valid_value(cls, value: int) -> bool:
@@ -83,15 +89,11 @@ class BetterIntEnum(int, enum.Enum):
             return cls(value).value
 
     @classmethod
-    def get_names(cls) -> T.List[str]:
-        return [i.name for i in cls]
-
-    @classmethod
     def get_values(cls) -> T.List[int]:
         return [i.value for i in cls]
 
 
-class BetterStrEnum(str, enum.Enum):
+class BetterStrEnum(Mixin, str, enum.Enum):
     """
     Example:
 
@@ -126,20 +128,8 @@ class BetterStrEnum(str, enum.Enum):
     """
 
     @classmethod
-    def get_by_name(cls, name: str):
-        return cls[name]
-
-    @classmethod
     def get_by_value(cls, value: str):
         return cls(value)
-
-    @classmethod
-    def is_valid_name(cls, name: str) -> bool:
-        try:
-            _ = cls[name]
-            return True
-        except KeyError:
-            return False
 
     @classmethod
     def is_valid_value(cls, value: str) -> bool:
@@ -160,10 +150,6 @@ class BetterStrEnum(str, enum.Enum):
             return value.value
         else:
             return cls(value).value
-
-    @classmethod
-    def get_names(cls) -> T.List[str]:
-        return [i.name for i in cls]
 
     @classmethod
     def get_values(cls) -> T.List[str]:
