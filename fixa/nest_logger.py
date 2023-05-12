@@ -72,7 +72,7 @@ def encode_pipe(pipe: str) -> str:
         return pipe + " "
     elif len(pipe) == 2 and pipe[1] == " ":
         return pipe
-    else: # pragma: no cover
+    else:  # pragma: no cover
         raise ValueError
 
 
@@ -192,6 +192,7 @@ class NestedLogger:
     """
     A logger that supports nested logging.
     """
+
     def __init__(
         self,
         logger: T.Optional[logging.Logger] = None,
@@ -207,7 +208,7 @@ class NestedLogger:
                 log_format=log_format,
                 datetime_format=datetime_format,
             )
-        else: # pragma: no cover
+        else:  # pragma: no cover
             self._logger = logger
 
         # ``_nest`` stores the current level of nesting
@@ -358,7 +359,7 @@ class NestedLogger:
 
         if pipe is None:
             self._pipes.append(DEFAULT_PIPE)
-        else: # pragma: no cover
+        else:  # pragma: no cover
             self._pipes.append(encode_pipe(pipe))
 
     def _nested_end(self):
@@ -475,7 +476,10 @@ class NestedLogger:
                     last_pipe = self._pipe_start(pipe)
 
                 self.ruler(
-                    msg=start_msg.format(func_name=func.__name__),
+                    msg=start_msg.format(
+                        func_name=func.__name__,
+                        **kwargs,
+                    ),
                     char=char,
                     align=align,
                     length=length,
@@ -492,7 +496,11 @@ class NestedLogger:
                     elapsed = (et - st).total_seconds()
                     self.info("")
                     self.ruler(
-                        msg=error_msg.format(func_name=func.__name__, elapsed=elapsed),
+                        msg=error_msg.format(
+                            func_name=func.__name__,
+                            elapsed=elapsed,
+                            **kwargs,
+                        ),
                         char=char,
                         align=align,
                         length=length,
@@ -506,7 +514,11 @@ class NestedLogger:
                 elapsed = (et - st).total_seconds()
                 self.info("")
                 self.ruler(
-                    msg=end_msg.format(func_name=func.__name__, elapsed=elapsed),
+                    msg=end_msg.format(
+                        func_name=func.__name__,
+                        elapsed=elapsed,
+                        **kwargs,
+                    ),
                     char=char,
                     align=align,
                     length=length,
