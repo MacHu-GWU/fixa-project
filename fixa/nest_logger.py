@@ -189,6 +189,9 @@ def decohints(decorator: T.Callable) -> T.Callable:
 
 
 class NestedLogger:
+    """
+    A logger that supports nested logging.
+    """
     def __init__(
         self,
         logger: T.Optional[logging.Logger] = None,
@@ -265,6 +268,9 @@ class NestedLogger:
         indent: int = 0,
         pipe: T.Optional[str] = None,
     ) -> str:  # pragma: no cover
+        """
+        Todo: add docstring
+        """
         return self._log(self._logger.debug, msg, indent, pipe)
 
     def info(
@@ -273,6 +279,9 @@ class NestedLogger:
         indent: int = 0,
         pipe: T.Optional[str] = None,
     ) -> str:
+        """
+        Todo: add docstring
+        """
         return self._log(self._logger.info, msg, indent, pipe)
 
     def warning(
@@ -281,6 +290,9 @@ class NestedLogger:
         indent: int = 0,
         pipe: T.Optional[str] = None,
     ) -> str:  # pragma: no cover
+        """
+        Todo: add docstring
+        """
         return self._log(self._logger.warning, msg, indent, pipe)
 
     def error(
@@ -289,6 +301,9 @@ class NestedLogger:
         indent: int = 0,
         pipe: T.Optional[str] = None,
     ) -> str:  # pragma: no cover
+        """
+        Todo: add docstring
+        """
         return self._log(self._logger.error, msg, indent, pipe)
 
     def critical(
@@ -297,6 +312,9 @@ class NestedLogger:
         indent: int = 0,
         pipe: T.Optional[str] = None,
     ) -> str:  # pragma: no cover
+        """
+        Todo: add docstring
+        """
         return self._log(self._logger.critical, msg, indent, pipe)
 
     def ruler(
@@ -311,6 +329,9 @@ class NestedLogger:
         pipe: T.Optional[str] = None,
         func: T.Optional[T.Callable] = None,
     ) -> str:
+        """
+        Todo: add docstring
+        """
         if func is None:
             func = self._logger.info
 
@@ -349,6 +370,37 @@ class NestedLogger:
         self,
         pipe: T.Optional[str] = None,
     ):
+        """
+        A context manager that nest logging for one more level.
+
+        Example:
+
+        .. code-block:: python
+
+            logger.ruler("section 1")
+            logger.info("hello 1")
+            with logger.nested():
+                logger.ruler("section 1.1")
+                logger.info("hello 1.1")
+                with logger.nested():
+                    logger.ruler("section 1.1.1")
+                    logger.info("hello 1.1.1")
+                    logger.ruler("section 1.1.1")
+                logger.ruler("section 1.1")
+            logger.ruler("section 1")
+
+        The output looks like::
+
+            [User] +----- section 1 -------------------------------------------+
+            [User] | hello 1
+            [User] | +----- section 1.1 ---------------------------------------+
+            [User] | | hello 1.1
+            [User] | | +----- section 1.1.1 -----------------------------------+
+            [User] | | | hello 1.1.1
+            [User] | | +----- section 1.1.1 -----------------------------------+
+            [User] | +----- section 1.1 ---------------------------------------+
+            [User] +----- section 1 -------------------------------------------+
+        """
         self._nested_start(pipe=pipe)
         try:
             yield self

@@ -15,6 +15,14 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.5.2 (2023-05-11)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Miscellaneous**
+
+- add ``get_names`` method for most of enum class in ``better_enum`` module
+- add ``error_emoji`` argument to ``nest_logger.NestedLogger.start_and_end`` decorator.
+
+
 0.5.1 (2023-05-05)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
