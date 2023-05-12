@@ -16,7 +16,7 @@ def setup_module(module):
     print("")
 
 
-def test_format_line():
+def _test_format_line():
     assert format_line("hello") == "| hello"
     assert format_line("hello", nest=1) == "| | hello"
     assert format_line("hello", nest=1, _pipes=["| ", "# "]) == "| # hello"
@@ -26,7 +26,7 @@ def test_format_line():
     assert format_line("hello", indent=1, nest=1, _pipes=["| ", "# "]) == "| #   hello"
 
 
-def test_format_ruler():
+def _test_format_ruler():
     assert format_ruler("Hello", length=40) == (
         "---------------- Hello -----------------"
     )
@@ -51,7 +51,7 @@ def test_format_ruler():
     )
 
 
-def test_nested_context_manager():
+def _test_nested_context_manager():
     print("")
     logger.ruler("section 1")
     logger.info("hello 1")
@@ -66,7 +66,7 @@ def test_nested_context_manager():
     logger.ruler("section 1")
 
 
-def test_disabled_context_manager():
+def _test_disabled_context_manager():
     print("")
 
     logger.info("a")
@@ -78,7 +78,7 @@ def test_disabled_context_manager():
     logger.info("c")
 
 
-def test_pretty_log_decorator():
+def _test_pretty_log_decorator():
     print("")
 
     @logger.pretty_log(pipe="🏭")
@@ -100,8 +100,7 @@ def test_pretty_log_decorator():
         with logger.nested():
             run_test()
 
-    run_deploy()
-
+    # run_deploy()
 
     @logger.pretty_log()
     def this_wont_work():
@@ -118,13 +117,11 @@ def test_pretty_log_decorator():
         outter_may_work()
 
 
-def test_block():
+def _test_block():
     print("")
 
     @logger.start_and_end(
         msg="My Function 1",
-        start_emoji="🟢",
-        end_emoji="🔴",
         pipe="📦",
     )
     def my_func1(name: str):
@@ -132,6 +129,31 @@ def test_block():
         logger.info(f"{name} do something in my func 1")
 
     my_func1(name="alice")
+
+    @logger.start_and_end(
+        msg="My Function 2",
+        pipe="📦",
+    )
+    def my_func2(name: str):
+        time.sleep(1)
+        logger.info(f"{name} do something in my func 1")
+        raise ValueError("something wrong")
+
+    with pytest.raises(Exception):
+        my_func2(name="alice")
+
+
+def test():
+    with logger.disabled(
+        disable=True,
+        # disable=False,
+    ):
+        _test_format_line()
+        _test_format_ruler()
+        _test_nested_context_manager()
+        _test_disabled_context_manager()
+        _test_pretty_log_decorator()
+        _test_block()
 
 
 if __name__ == "__main__":

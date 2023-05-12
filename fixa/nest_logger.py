@@ -358,7 +358,7 @@ class NestedLogger:
     def pretty_log(
         self,
         start_msg: str = "Start {func_name}()",
-        error_msg: str = "Error, elapsed = {elapsed:.2f} sec",
+        error_msg: str = "Error {func_name}(), elapsed = {elapsed:.2f} sec",
         end_msg: str = "End {func_name}(), elapsed = {elapsed:.2f} sec",
         char: str = "-",
         align: AlignEnum = AlignEnum.left,
@@ -440,7 +440,7 @@ class NestedLogger:
                     elapsed = (et - st).total_seconds()
                     self.info("")
                     self.ruler(
-                        msg=error_msg.format(elapsed=elapsed),
+                        msg=error_msg.format(func_name=func.__name__, elapsed=elapsed),
                         char=char,
                         align=align,
                         length=length,
@@ -478,8 +478,9 @@ class NestedLogger:
     def start_and_end(
         self,
         msg: str,
-        start_emoji: str = "",
-        end_emoji: str = "",
+        start_emoji: str = "🟢",
+        error_emoji: str = "🔴",
+        end_emoji: str = "🟢",
         pipe: str = "| ",
     ):
         """
@@ -493,7 +494,8 @@ class NestedLogger:
             @logger.start_and_end(
                 msg="My Function 1",
                 start_emoji="🟢",
-                end_emoji="🔴",
+                error_emoji="🔴",
+                end_emoji="🟢",
                 pipe="📦",
             )
             def my_func1(name: str):
@@ -508,7 +510,7 @@ class NestedLogger:
             [User] 📦
             [User] 📦 alice do something in my func 1
             [User] 📦
-            [User] +----- ⏰ 🔴 End 'My Function 1', elapsed = 1.01 sec --------+
+            [User] +----- ⏰ 🟢 End 'My Function 1', elapsed = 1.01 sec --------+
 
         :param msg: indicate the name of the function
         :param start_emoji: custom emoji for the start message
@@ -518,10 +520,13 @@ class NestedLogger:
         """
         if start_emoji and (not start_emoji.endswith(" ")):
             start_emoji = start_emoji + " "
+        if error_emoji and (not error_emoji.endswith(" ")):
+            error_emoji = error_emoji + " "
         if end_emoji and (not end_emoji.endswith(" ")):
             end_emoji = end_emoji + " "
         return self.pretty_log(
             start_msg=f"⏱ {start_emoji}Start {msg!r}",
+            error_msg=f"⏰ {error_emoji}Error {msg!r}, elapsed = {{elapsed:.2f}} sec",
             end_msg=f"⏰ {end_emoji}End {msg!r}, elapsed = {{elapsed:.2f}} sec",
             pipe=pipe,
         )
