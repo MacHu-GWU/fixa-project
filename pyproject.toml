@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "fixa"
+version = "0.5.3"
+description = "Like the Ikea FIXA, it is my toolbox to fix things."
+authors = ["Sanhe Hu <husanhe@gmail.com>"]
+
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+
+[tool.poetry.dev-dependencies]
+# Don't put anything here, explicit is better than implicit
+
+
+[tool.poetry.group.dev]
+optional = true
+
+
+[tool.poetry.group.dev.dependencies]
+twine = "*"
+wheel = "*"
+pathlib_mate = "*"
+
+
+[tool.poetry.group.doc]
+optional = true
+
+
+[tool.poetry.group.doc.dependencies]
+
+
+[tool.poetry.group.test]
+optional = true
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-cov = "*"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
