@@ -15,6 +15,13 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.6.1 (2023-05-26)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``build_dist`` module to build the source distribution of Python.
+
+
 0.5.3 (2023-05-12)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Minor Improvements**
