@@ -16,7 +16,17 @@ def temp_cwd(path: T.Union[str, Path]):  # pragma: no cover
     """
     Temporarily set the current working directory (CWD) and automatically
     switch back when it's done.
+
+    Example:
+
+    .. code-block:: python
+
+        with temp_cwd(Path("/path/to/target/working/directory")):
+            # do something
     """
+    path = Path(path).absolute()
+    if not path.is_dir():
+        raise NotADirectoryError(f"{path} is not a dir!")
     cwd = os.getcwd()
     os.chdir(str(path))
     try:
@@ -27,6 +37,18 @@ def temp_cwd(path: T.Union[str, Path]):  # pragma: no cover
 
 class GitCLIError(Exception):
     pass
+
+
+def locate_dir_repo(path: Path) -> Path:
+    """
+    Locate the directory of the git repository. Similar to the effect of
+    ``git rev-parse --show-toplevel``.
+    """
+    if path.joinpath(".git").exists():
+        return path
+    if path.parent == path:
+        raise FileNotFoundError("Cannot find the .git folder!")
+    return locate_dir_repo(path.parent)
 
 
 def get_git_branch_from_git_cli(dir_repo: T.Union[str, Path]) -> str:
