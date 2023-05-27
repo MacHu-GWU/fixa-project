@@ -19,6 +19,9 @@ def temp_cwd(path: T.Union[str, Path]):
         with temp_cwd(Path("/path/to/target/working/directory")):
             # do something
     """
+    path = Path(path).absolute()
+    if not path.is_dir():
+        raise NotADirectoryError(f"{path} is not a dir!")
     cwd = os.getcwd()
     os.chdir(str(path))
     try:

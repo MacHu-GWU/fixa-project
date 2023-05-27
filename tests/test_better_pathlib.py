@@ -21,6 +21,10 @@ def test_temp_cwd():
             raise Exception()
     assert Path.cwd() != p
 
+    with pytest.raises(NotADirectoryError):
+        with temp_cwd(__file__):
+            pass
+
 
 if __name__ == "__main__":
     from fixa.tests import run_cov_test
