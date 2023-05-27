@@ -47,6 +47,32 @@ def test_hash_file():
     assert id1 == id2
 
 
+def test_hash_folder():
+    hashes.use_sha256().use_hexdigesst()
+
+    dir_project_root = Path(__file__).absolute().parent.parent
+    dir_fixa = dir_project_root / "fixa"
+    dir_tests = dir_project_root / "tests"
+    path_readme = dir_project_root / "README.rst"
+
+    with pytest.raises(NotADirectoryError):
+        hashes.of_folder(path_readme)
+
+    id1 = hashes.of_folder(dir_fixa)
+    id2 = hashes.of_folder(dir_fixa)
+    assert id1 == id2
+
+    id3 = hashes.of_folder(dir_tests)
+    id4 = hashes.of_folder(dir_tests)
+    assert id3 == id4
+
+    assert id1 != id3
+
+    id5 = hashes.of_paths([dir_fixa, dir_tests, path_readme])
+    id6 = hashes.of_paths([dir_fixa, dir_tests, path_readme])
+    assert id5 == id6
+
+
 def test_hash_anything():
     """
     This test may failed in different operation system.

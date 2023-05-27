@@ -221,5 +221,54 @@ class Hashes:
                 m.update(data)
         return self._digest(m, hexdigest)
 
+    def of_folder(
+        self,
+        abspath: T.Union[str, Path, T.Any],
+        algo: T.Optional[HashAlgoEnum] = None,
+        hexdigest: T.Optional[bool] = None,
+    ) -> str:
+        """
+        Return hash value of a folder. It is based on the concatenation of
+        the hash values of all files in the folder. The order of the files
+        are sorted by their paths.
+        """
+        path = Path(abspath)
+        if not path.is_dir():
+            raise NotADirectoryError(f"{path} is not a folder!")
+        hashes = list()
+        for p in sorted(path.glob("**/*"), key=lambda x: str(x)):
+            if p.is_file():
+                hashes.append(self.of_file(p, algo=algo, hexdigest=hexdigest))
+        return self.of_str(
+            s="".join(hashes),
+            algo=algo,
+            hexdigest=hexdigest,
+        )
+
+    def of_paths(
+        self,
+        paths: T.List[T.Union[str, Path, T.Any]],
+        algo: T.Optional[HashAlgoEnum] = None,
+        hexdigest: T.Optional[bool] = None,
+    ) -> str:
+        """
+        Return hash value of a list of paths. It is based on the concatenation of
+        the hash values of all files and folders.
+        """
+        hashes = list()
+        for path in paths:
+            path = Path(path)
+            if path.is_dir():
+                hashes.append(self.of_folder(path, algo=algo, hexdigest=hexdigest))
+            elif path.is_file():
+                hashes.append(self.of_file(path, algo=algo, hexdigest=hexdigest))
+            else:  # pragma: no cover
+                pass
+        return self.of_str(
+            s="".join(hashes),
+            algo=algo,
+            hexdigest=hexdigest,
+        )
+
 
 hashes = Hashes()
