@@ -15,6 +15,22 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.7.1 (2023-05-27)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``hashes.Hashes.of_folder`` and ``hashes.Hashes.of_paths``.
+- add ``git_cli.locate_dir_repo``.
+
+**Minor Improvements**
+
+- add edge case handling for ``better_pathlib.temp_cwd``.
+
+**Bugfixes**
+
+**Miscellaneous**
+
+
 0.6.1 (2023-05-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
