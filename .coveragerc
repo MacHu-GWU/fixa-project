@@ -4,6 +4,7 @@
 omit =
     fixa/docs/*
     fixa/tests/*
+    fixa/aws/*
     fixa/_version.py
     fixa/pytest_cov_helper.py
     fixa/os_platform.py
