@@ -112,6 +112,32 @@ def test_grouper_dict():
     ]
 
 
+def test_group_by():
+    class Record:
+        def __init__(self, product: str, date: str, sale: int):
+            self.product = product
+            self.date = date
+            self.sale = sale
+
+    records = [
+        Record("apple", "2020-01-01", 10),
+        Record("apple", "2020-01-02", 20),
+        Record("apple", "2020-01-03", 30),
+        Record("banana", "2020-01-01", 10),
+        Record("banana", "2020-01-02", 20),
+        Record("banana", "2020-01-03", 30),
+    ]
+
+    groups = iterable.group_by(records, get_key=lambda x: x.product)
+
+    sales = [record.sale for record in groups["apple"]]
+    sales.sort()
+    assert sales == [10, 20, 30]
+    sales = [record.sale for record in groups["banana"]]
+    sales.sort()
+    assert sales == [10, 20, 30]
+
+
 def test_size_of_generator():
     """测试 :func:`~sfm.iterable.size_of_generator`  的性能。"""
 
