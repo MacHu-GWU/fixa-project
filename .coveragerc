@@ -4,7 +4,8 @@
 omit =
     fixa/docs/*
     fixa/tests/*
-    fixa/aws/*
+    fixa/aws/mock_test.py
+    fixa/aws/aws_dynamodb_export_to_s3.py
     fixa/_version.py
     fixa/pytest_cov_helper.py
     fixa/os_platform.py

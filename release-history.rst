@@ -21,6 +21,7 @@ Backlog (TODO)
 
 - add ``waiter.Waiter`` for retry and long polling pattern
 - add ``iterable.group_by`` function
+- add ``aws.aws_s3_uri.py`` module
 - add ``aws.aws_dynamodb_export_to_s3.py`` module
 
 
