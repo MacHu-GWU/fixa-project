@@ -15,10 +15,11 @@ Backlog (TODO)
 **Miscellaneous**
 
 
-0.8.2 (2023-08-26)
+0.9.1 (2023-08-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
+- add ``better_pathlib.get_dir_here()`` method.
 - add ``nested_logger.NestedLogger.indent()`` context manager to create additional indent.
 
 **Bugfixes**
@@ -30,10 +31,10 @@ Backlog (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
-- add ``waiter.Waiter`` for retry and long polling pattern
-- add ``iterable.group_by`` function
-- add ``aws.aws_s3_uri.py`` module
-- add ``aws.aws_dynamodb_export_to_s3.py`` module
+- add ``waiter.Waiter`` for retry and long polling pattern.
+- add ``iterable.group_by`` function.
+- add ``aws.aws_s3_uri.py`` module.
+- add ``aws.aws_dynamodb_export_to_s3.py`` module.
 
 
 0.7.1 (2023-05-27)

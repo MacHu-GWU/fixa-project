@@ -167,8 +167,8 @@ def _test_indent():
 
 def test():
     with logger.disabled(
-        # disable=True,
-        disable=False,
+        disable=True,
+        # disable=False,
     ):
         _test_format_line()
         _test_format_ruler()
