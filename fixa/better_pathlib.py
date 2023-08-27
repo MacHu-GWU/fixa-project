@@ -28,3 +28,16 @@ def temp_cwd(path: T.Union[str, Path]):
         yield path
     finally:
         os.chdir(cwd)
+
+
+def get_dir_here(file_var: str) -> Path:
+    """
+    Get the directory of the current file.
+
+    Example:
+
+    .. code-block:: python
+
+        get_dir_here(__file__)
+    """
+    return Path(file_var).absolute().parent
