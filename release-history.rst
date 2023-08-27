@@ -15,6 +15,17 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.8.2 (2023-08-26)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``nested_logger.NestedLogger.indent()`` context manager to create additional indent.
+
+**Bugfixes**
+
+- fix a bug that `nested_logger.NestedLogger` does not reset the ``_pipes`` to previous when there is an error in the context manager logic.
+
+
 0.8.1 (2023-07-31)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**

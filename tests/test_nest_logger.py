@@ -9,8 +9,11 @@ from fixa.nest_logger import (
     NestedLogger,
 )
 
-logger = NestedLogger(name="nested_logger_unit_test")
-
+logger = NestedLogger(
+    name="nested_logger_unit_test",
+    # log_format="%(message)s",
+    # tab="    ",
+)
 
 def setup_module(module):
     print("")
@@ -143,10 +146,29 @@ def _test_block():
         my_func2(name="alice")
 
 
+def _test_indent():
+    logger.ruler("start test indent")
+
+    logger.info("a")
+    with logger.indent():
+        logger.info("b")
+        with logger.indent():
+            logger.info("c")
+        logger.info("d")
+    logger.info("e")
+
+    logger.info("x")
+    with logger.indent(2):
+        logger.info("y")
+        logger.info("z", 2)
+
+    logger.ruler("end test indent")
+
+
 def test():
     with logger.disabled(
-        disable=True,
-        # disable=False,
+        # disable=True,
+        disable=False,
     ):
         _test_format_line()
         _test_format_ruler()
@@ -154,6 +176,7 @@ def test():
         _test_disabled_context_manager()
         _test_pretty_log_decorator()
         _test_block()
+        _test_indent()
 
 
 if __name__ == "__main__":
