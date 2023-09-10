@@ -21,6 +21,7 @@ Backlog (TODO)
 
 - add ``aws.aws_s3_lock.py`` module. It is a S3 based distributive lock implementation.
 - add ``aws.aws_s3_tracker.py`` module. It is a S3 based progress tracker implementation.
+- add ``aws.aws_s3_search.py`` module. It boost searching lots of s3 object without hitting the list_object API over and over again.
 
 **Minor Improvements**
 
