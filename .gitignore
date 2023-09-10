@@ -3,6 +3,7 @@ fixa_venv/
 fixa.egg-info/
 fixa-*/
 tmp/
+*.sqlite
 
 
 # Byte-compiled / optimized / DLL files

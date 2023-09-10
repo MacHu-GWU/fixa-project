@@ -12,7 +12,7 @@ reload the database to get the latest data when necessary.
 
 This is similar to S3 inventory feature, however, it is more free and more flexible.
 
-Dependencies::
+Requirements::
 
     s3pathlib>=2.1.2,<3.0.0
     sqlalchemy>-2.0.0,<3.0.0

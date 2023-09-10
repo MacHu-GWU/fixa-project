@@ -9,6 +9,11 @@ You can use tracker to track the last succeeded year.
 I suggest to use this module with :mod:`fixa.aws.aws_s3_lock` module, so
 you can have a distributive lock to prevent multiple processes to update the tracker.
 
+Requirements::
+
+    python>=3.7
+    boto3
+
 Usage:
 
 .. code-block:: python
@@ -51,6 +56,9 @@ Usage:
 import typing as T
 import dataclasses
 
+if T.TYPE_CHECKING:  # pragma: no cover
+    from mypy_boto3_s3.client import S3Client
+
 
 @dataclasses.dataclass
 class BaseTracker:
@@ -91,7 +99,7 @@ class Backend:
     key: str = dataclasses.field()
     tracker_class: T.Any = dataclasses.field()
 
-    def read(self, s3_client):
+    def read(self, s3_client: "S3Client"):
         """
         Read the tracker from S3.
         """
@@ -106,7 +114,7 @@ class Backend:
             else:  # pragma: no cover
                 raise e
 
-    def write(self, s3_client, tracker):
+    def write(self, s3_client: "S3Client", tracker):
         """
         Write the tracker to S3.
         """

@@ -3,6 +3,11 @@
 """
 This module provides a distributed lock using AWS S3 backend.
 
+Requirements::
+
+    python>=3.7
+    boto3
+
 Usage:
 
 .. code-block:: python
@@ -31,6 +36,9 @@ import time
 import uuid
 import dataclasses
 from datetime import datetime, timezone
+
+if T.TYPE_CHECKING:  # pragma: no cover
+    from mypy_boto3_s3.client import S3Client
 
 
 def get_utc_now() -> datetime:
@@ -108,7 +116,7 @@ class Vault:
     expire: int = dataclasses.field()
     wait: float = dataclasses.field(default=1.0)
 
-    def _read(self, s3_client) -> Lock:
+    def _read(self, s3_client: "S3Client") -> Lock:
         try:
             response = s3_client.get_object(Bucket=self.bucket, Key=self.key)
             return Lock.from_json(response["Body"].read().decode("utf-8"))
@@ -125,7 +133,7 @@ class Vault:
             else:  # pragma: no cover
                 raise e
 
-    def _write(self, s3_client, lock: Lock):
+    def _write(self, s3_client: "S3Client", lock: Lock):
         s3_client.put_object(
             Bucket=self.bucket,
             Key=self.key,
@@ -133,7 +141,7 @@ class Vault:
             ContentType="application/json",
         )
 
-    def acquire(self, s3_client, owner: T.Optional[str] = None) -> Lock:
+    def acquire(self, s3_client: "S3Client", owner: T.Optional[str] = None) -> Lock:
         """
         The owner tries to acquire the lock.
 
@@ -168,7 +176,7 @@ class Vault:
 
         return lock
 
-    def release(self, s3_client, lock: Lock) -> Lock:
+    def release(self, s3_client: "S3Client", lock: Lock) -> Lock:
         """
         Release the lock. Set the owner as None and update release time.
 
