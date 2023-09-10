@@ -67,7 +67,7 @@ Modules and Examples:
 - `hashes <./examples/hashes.ipynb>`_
 - `nested_logger <./examples/nested_logger.ipynb>`_
 - `timer <./examples/timer.ipynb>`_
-
+- `aws_s3_lock <./examples/aws/aws_s3_lock.ipynb>`_
 
 .. _install:
 
