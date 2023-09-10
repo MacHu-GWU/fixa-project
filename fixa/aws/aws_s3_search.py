@@ -59,6 +59,8 @@ import sqlalchemy as sa
 from sqlalchemy import orm
 from sqlalchemy.dialects import sqlite
 from s3pathlib import S3Path
+from func_args import NOTHING
+
 
 if T.TYPE_CHECKING:  # pragma: no cover
     from mypy_boto3_s3.client import S3Client
@@ -201,8 +203,11 @@ class S3Database:
         s3dir_uri: str,
         s3_client: "S3Client",
         ignore_expire: bool = False,
+        ignore_metadata: bool = False,
         ignore_tags: bool = False,
+        ignore_client_error: bool = False,
         expire: int = 900,
+        limit: int = NOTHING,
     ) -> int:
         """
         Load s3 object from only one s3 directory. It will list all objects
@@ -217,8 +222,12 @@ class S3Database:
         :param s3_client: the boto3.client("s3") object.
         :param ignore_expire: if True, we force reload the s3 directory even
             if it is not expired.
-        :param ignore_tags: if True, we don't load the tags of the s3 objects
+        :param ignore_metadata: if True, we don't load the metadata of the s3 object
             into the database.
+        :param ignore_tags: if True, we don't load the tags of the s3 object
+            into the database.
+        :param ignore_client_error: if True, we skip the s3 object that failed
+            to load the metadata or tags.
         :param expire: expire time in seconds.
         """
         s3dir = S3Path(s3dir_uri)
@@ -251,8 +260,11 @@ class S3Database:
             start_time = datetime.utcnow()
             expire_time = start_time + timedelta(seconds=expire)
 
-            if ignore_tags:  # pragma: no cover
-                for s3path in s3dir.iter_objects(bsm=s3_client):
+            if (ignore_metadata is True) and (ignore_tags is True):  # pragma: no cover
+                for ith, s3path in enumerate(
+                    s3dir.iter_objects(bsm=s3_client, limit=limit), start=1
+                ):
+                    # print(f"loading {ith}: {s3path.uri}")
                     s3obj = S3Object(
                         uri=s3path.uri,
                         s3dir_md5=s3dir_md5,
@@ -266,14 +278,37 @@ class S3Database:
                         obj_update_at=s3path.last_modified_at,
                         etag=s3path.etag,
                         size=s3path.size,
-                        meta=s3path.metadata,
+                        meta={},
                         tags={},
                         update_time=start_time,
                         expire_time=expire_time,
                     )
                     s3obj_list.append(s3obj)
             else:
-                for s3path in s3dir.iter_objects(bsm=s3_client):
+                for ith, s3path in enumerate(
+                    s3dir.iter_objects(bsm=s3_client, limit=limit),
+                    start=1,
+                ):
+                    # print(f"loading {ith} th: {s3path.uri}")
+                    if ignore_metadata is False:
+                        try:
+                            s3path.head_object(s3_client)
+                        except Exception as e:  # pragma: no cover
+                            if ignore_client_error:
+                                continue
+                            else:
+                                raise e
+                        meta = s3path.metadata
+                    else:
+                        meta = {}
+                    if ignore_tags is False:
+                        try:
+                            tags = s3path.get_tags(bsm=s3_client)[1]
+                        except Exception as e:  # pragma: no cover
+                            if ignore_client_error:
+                                continue
+                            else:
+                                raise e
                     s3obj = S3Object(
                         uri=s3path.uri,
                         s3dir_md5=s3dir_md5,
@@ -287,16 +322,17 @@ class S3Database:
                         obj_update_at=s3path.last_modified_at,
                         etag=s3path.etag,
                         size=s3path.size,
-                        meta=s3path.metadata,
-                        tags=s3path.get_tags()[1],
+                        meta=meta,
+                        tags=tags,
                         update_time=start_time,
                         expire_time=expire_time,
                     )
                     s3obj_list.append(s3obj)
+
             end_time = datetime.utcnow()
             ses.add_all(s3obj_list)
-
             n_object = len(s3obj_list)
+
             cached_s3dir = LoadedS3Dir(
                 uri=s3dir.uri,
                 expire=expire,
@@ -315,8 +351,11 @@ class S3Database:
         s3dir_uri_list: T.List[str],
         s3_client: T.Union["S3Client", T.List["S3Client"]],
         ignore_expire: bool = False,
+        ignore_metadata: bool = False,
         ignore_tags: bool = False,
+        ignore_client_error: bool = False,
         expire: int = 900,
+        limit: int = NOTHING,
     ) -> int:
         """
         Load all s3 object from s3dir_uri_list.
@@ -328,8 +367,12 @@ class S3Database:
             s3_client.
         :param ignore_expire: if True, we force reload the s3 directory even
             if it is not expired.
+        :param ignore_metadata: if True, we don't load the metadata of the s3 object
+            into the database.
         :param ignore_tags: if True, we don't load the tags of the s3 objects
             into the database.
+        :param ignore_client_error: if True, we skip the s3 object that failed
+            to load the metadata or tags.
         :param expire: expire time in seconds.
         """
         if isinstance(s3_client, list):
@@ -346,8 +389,11 @@ class S3Database:
                 s3dir_uri=s3dir_uri,
                 s3_client=s3_client,
                 ignore_expire=ignore_expire,
+                ignore_metadata=ignore_metadata,
                 ignore_tags=ignore_tags,
+                ignore_client_error=ignore_client_error,
                 expire=expire,
+                limit=limit,
             )
 
         return n_object
