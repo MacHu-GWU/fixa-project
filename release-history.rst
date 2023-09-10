@@ -15,19 +15,21 @@ Backlog (TODO)
 **Miscellaneous**
 
 
-0.10.1 (TODO)
+0.10.2 (2023-09-10)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Bugfixes**
+
+- fix a bug that  ``aws.aws_s3_search.py`` module cannot find the correct s3_client to get metadata.
+- ``aws.aws_s3_search.py`` module now allow user to ignore metadata or tags when creating the database.
+
+
+0.10.1 (2023-09-10)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
 - add ``aws.aws_s3_lock.py`` module. It is a S3 based distributive lock implementation.
 - add ``aws.aws_s3_tracker.py`` module. It is a S3 based progress tracker implementation.
 - add ``aws.aws_s3_search.py`` module. It boost searching lots of s3 object without hitting the list_object API over and over again.
-
-**Minor Improvements**
-
-**Bugfixes**
-
-**Miscellaneous**
 
 
 0.9.1 (2023-08-26)
