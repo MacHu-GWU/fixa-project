@@ -68,6 +68,7 @@ Modules and Examples:
 - `nested_logger <./examples/nested_logger.ipynb>`_
 - `timer <./examples/timer.ipynb>`_
 - `aws_s3_lock <./examples/aws/aws_s3_lock.ipynb>`_
+- `aws_s3_tracker <./examples/aws/aws_s3_tracker.ipynb>`_
 
 .. _install:
 

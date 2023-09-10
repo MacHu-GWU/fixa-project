@@ -40,16 +40,16 @@ Usage:
     backend = Backend(bucket="my-bucket", key="tracker.json", tracker_class=Tracker)
 
     # read tracker, if the tracker does not exist, it will create a default one
-    tracker = backend.read(self.bsm.s3_client)
-    assert tracker.offset == 2000
+    tracker = backend.read(s3_client)
+    assert tracker.year == 2000
 
     # update tracker and write it back to S3
-    tracker.offset = 2001
-    backend.write(self.bsm.s3_client, tracker)
+    tracker.year = 2001
+    backend.write(s3_client, tracker)
 
     # read tracker again, you will get the updated one
-    tracker = backend.read(self.bsm.s3_client)
-    assert tracker.offset == 2001
+    tracker = backend.read(s3_client)
+    assert tracker.year == 2001
 """
 
 
