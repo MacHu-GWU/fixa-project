@@ -20,6 +20,7 @@ Backlog (TODO)
 **Features and Improvements**
 
 - add ``aws.aws_s3_lock.py`` module. It is a S3 based distributive lock implementation.
+- add ``aws.aws_s3_tracker.py`` module. It is a S3 based progress tracker implementation.
 
 **Minor Improvements**
 
