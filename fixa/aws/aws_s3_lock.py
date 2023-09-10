@@ -130,6 +130,7 @@ class Vault:
             Bucket=self.bucket,
             Key=self.key,
             Body=lock.to_json(),
+            ContentType="application/json",
         )
 
     def acquire(self, s3_client, owner: T.Optional[str] = None) -> Lock:

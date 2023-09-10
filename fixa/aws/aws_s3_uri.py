@@ -10,6 +10,11 @@ def split_s3_uri(
     Split AWS S3 URI, returns bucket and key.
 
     :param s3_uri: example, ``"s3://my-bucket/my-folder/data.json"``
+
+    Example::
+
+        >>> split_s3_uri("s3://my-bucket/my-folder/my-file.txt")
+        ("my-bucket", "my-folder/my-file.txt")
     """
     parts = s3_uri.split("/")
     bucket = parts[2]
@@ -27,7 +32,10 @@ def join_s3_uri(
     :param bucket: example, ``"my-bucket"``
     :param key: example, ``"my-folder/data.json"`` or ``"my-folder/"``
 
-    .. versionadded:: 1.0.1
+    Example::
+
+        >>> join_s3_uri(bucket="my-bucket", key="my-folder/data.json")
+        "s3://my-bucket/my-folder/data.json"
     """
     return "s3://{}/{}".format(bucket, key)
 
@@ -42,8 +50,6 @@ def split_parts(key: str) -> T.List[str]:
         ["a", "b", "c"]
         >>> split_parts("//a//b//c//")
         ["a", "b", "c"]
-
-    .. versionadded:: 1.0.1
     """
     return [part for part in key.split("/") if part]
 
