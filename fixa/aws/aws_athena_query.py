@@ -98,7 +98,7 @@ def read_athena_query_result(
     :param verbose: do you want to print the log?
 
     :return: the lazy DataFrame of the result, If you just need to return the
-        regular DataFrame, you can do ``df = run_athena_query(...).collect()``.
+        regular DataFrame, you can do ``df = read_athena_query_result(...).collect()``.
 
     .. versionadded:: 0.11.1
     """
@@ -156,7 +156,7 @@ def run_athena_query(
     With LazyFrame, you can do further select, filter actions before actually
     reading the data, and leverage the parquet predicate pushdown feature to
     reduce the amount of data to be read. If you just need to return the
-    regular DataFrame, you can do ``df = run_athena_query(...).collect()``.
+    regular DataFrame, you can do ``df = run_athena_query(...)[0].collect()``.
 
     Example::
 
@@ -170,12 +170,13 @@ def run_athena_query(
 
         >>> database = "your_database"
         >>> sql = f"SELECT * FROM {database}.your_table LIMIT 10;"
-        >>> df = run_athena_query(
+        >>> lazy_df, exec_id = run_athena_query(
         ...     bsm=bsm,
         ...     s3dir_result=s3dir_result,
         ...     sql=sql,
         ...     database=database,
-        ... ).collect()
+        ... )
+        >>> df = lazy_df.collect()
         >>> df
         ...
 
