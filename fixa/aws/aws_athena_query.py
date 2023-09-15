@@ -12,6 +12,14 @@ Requirements:
     pyarrow
 
 You can run ``pip install polars s3fs pyarrow`` to install them.
+
+Usage::
+
+    from aws_athena_query import (
+        run_athena_query,
+        read_athena_query_result,
+        wait_athena_query_to_succeed,
+    )
 """
 
 import typing as T
@@ -29,18 +37,21 @@ if T.TYPE_CHECKING:
     from s3pathlib import S3Path
 
 
-__version__ = "0.1.1"
-
-
 def wait_athena_query_to_succeed(
     bsm: "BotoSesManager",
     exec_id: str,
     delta: int = 1,
     timeout: int = 30,
 ):
+    """
+    Wait a given athena query to reach ``SUCCEEDED`` status. If failed, raise
+    ``RuntimeError`` immediately. If timeout, raise ``TimeoutError``.
+
+    .. versionadded:: 0.11.1
+    """
     # ref: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/athena/client/get_query_execution.html
-    # wait for the execution to finish
-    for _ in range(timeout):
+    elapsed = 0
+    for _ in range(999999):
         res = bsm.athena_client.get_query_execution(
             QueryExecutionId=exec_id,
         )
@@ -48,10 +59,12 @@ def wait_athena_query_to_succeed(
         if status == "SUCCEEDED":
             return
         elif status in ["FAILED", "CANCELLED"]:
-            raise RuntimeError(f"status = {status}")
+            raise RuntimeError(f"execution {exec_id} reached status: {status}")
         else:
             time.sleep(delta)
-    raise TimeoutError(f"athena query timeout in {timeout} seconds!")
+        elapsed += delta
+        if elapsed > timeout:
+            raise TimeoutError(f"athena query timeout in {timeout} seconds!")
 
 
 def _get_dataset_and_metadata_s3path(
@@ -86,6 +99,8 @@ def read_athena_query_result(
 
     :return: the lazy DataFrame of the result, If you just need to return the
         regular DataFrame, you can do ``df = run_athena_query(...).collect()``.
+
+    .. versionadded:: 0.11.1
     """
     s3dir_dataset, s3dir_metadata = _get_dataset_and_metadata_s3path(s3dir_result)
     # read the manifest file to get list of parquet file uris
@@ -190,6 +205,8 @@ def run_athena_query(
 
     :return: the tuple of two item, the first item is the lazy DataFrame of the result,
         the second item is the athena query execution id (str)>
+
+    .. versionadded:: 0.11.1
     """
     # the sql query should not end with ;, it will be embedded in the final query
     sql = sql.strip()
