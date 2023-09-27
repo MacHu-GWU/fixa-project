@@ -2,7 +2,7 @@
 
 import typing as T
 import dataclasses
-from fixa.better_fuzzywuzzy import FuzzyMatcher
+from fixa.pylib.better_fuzzywuzzy import FuzzyMatcher
 
 
 @dataclasses.dataclass
@@ -51,4 +51,4 @@ class TestFuzzyMatcher:
 if __name__ == "__main__":
     from fixa.tests import run_cov_test
 
-    run_cov_test(__file__, "fixa.better_fuzzywuzzy", preview=False)
+    run_cov_test(__file__, "fixa.pylib.better_fuzzywuzzy", preview=False)
