@@ -18,6 +18,9 @@
 .. image:: https://img.shields.io/pypi/pyversions/fixa.svg
     :target: https://pypi.python.org/pypi/fixa
 
+.. image:: https://img.shields.io/badge/release_history!--None.svg?style=social
+    :target: https://github.com/MacHu-GWU/fixa-project/blob/main/release-history.rst
+
 .. image:: https://img.shields.io/badge/STAR_Me_on_GitHub!--None.svg?style=social
     :target: https://github.com/MacHu-GWU/fixa-project
 
