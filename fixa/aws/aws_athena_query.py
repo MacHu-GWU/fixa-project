@@ -5,7 +5,7 @@ This module allow user to use parquet file to store Athena query result.
 It returns the athena query result as a
 `polars.LazyFrame <https://pola-rs.github.io/polars/py-polars/html/reference/lazyframe/index.html>`_.
 
-Requirements:
+Requirements::
 
     polars
     s3fs

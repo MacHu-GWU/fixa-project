@@ -2,8 +2,10 @@
 
 import textwrap
 import polars as pl
+
 from boto_session_manager import BotoSesManager
 from s3pathlib import S3Path
+
 from fixa.aws.aws_athena_query import read_athena_query_result, run_athena_query
 
 bsm = BotoSesManager(profile_name="awshsh_app_dev_us_east_1")
@@ -13,11 +15,13 @@ s3dir_athena_result = s3bucket.joinpath("athena", "results").to_dir()
 
 database = "dynamodb_to_datalake"
 
+# fmt: off
 sql = textwrap.dedent(f"""
 SELECT * 
 FROM transactions 
 LIMIT 10; 
 """)
+# fmt: on
 
 lazy_df, exec_id = run_athena_query(
     bsm=bsm,
