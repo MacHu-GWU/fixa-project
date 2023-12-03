@@ -3,25 +3,26 @@
 """
 A simple regex parser to parse conventional commit message.
 
-Usage:
+Usage example::
 
-    >>> import fixa.conventional_commits as conv_commits
-    >>> conv_commits.tokenize
-    >>> conv_commits.ConventionalCommit
-    >>> conv_commits.ConventionalCommitParser
-    >>> conv_commits.SemanticCommitEnum
-    >>> conv_commits.default_parser
-    >>> conv_commits.is_certain_semantic_commit
-    >>> conv_commits.is_feat_commit
-    >>> conv_commits.is_fix_commit
-    >>> conv_commits.is_test_commit
-    >>> conv_commits.is_utest_commit
-    >>> conv_commits.is_itest_commit
-    >>> conv_commits.is_ltest_commit
-    >>> conv_commits.is_doc_commit
-    >>> conv_commits.is_build_commit
-    >>> conv_commits.is_publish_commit
-    >>> conv_commits.is_release_commit
+    import fixa.conventional_commits as conv_commits
+
+    conv_commits.tokenize
+    conv_commits.ConventionalCommit
+    conv_commits.ConventionalCommitParser
+    conv_commits.SemanticCommitEnum
+    conv_commits.default_parser
+    conv_commits.is_certain_semantic_commit
+    conv_commits.is_feat_commit
+    conv_commits.is_fix_commit
+    conv_commits.is_test_commit
+    conv_commits.is_utest_commit
+    conv_commits.is_itest_commit
+    conv_commits.is_ltest_commit
+    conv_commits.is_doc_commit
+    conv_commits.is_build_commit
+    conv_commits.is_publish_commit
+    conv_commits.is_release_commit
 
 Reference:
 

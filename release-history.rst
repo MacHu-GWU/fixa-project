@@ -21,6 +21,7 @@ Backlog (TODO)
 
 - add ``aws.aws_sts`` module.
 - add ``conventional_commits`` module.
+- add ``semantic_branch`` module.
 
 
 0.11.1 (2023-10-24)
