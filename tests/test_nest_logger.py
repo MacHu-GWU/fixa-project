@@ -120,7 +120,7 @@ def _test_pretty_log_decorator():
         outter_may_work()
 
 
-def _test_block():
+def _test_start_and_end():
     print("")
 
     @logger.start_and_end(
@@ -144,6 +144,20 @@ def _test_block():
 
     with pytest.raises(Exception):
         my_func2(name="alice")
+
+
+def _test_emoji_block():
+    print("")
+
+    @logger.emoji_block(
+        msg="Deploy app {app_name}",
+        emoji="🚀",
+    )
+    def deploy_app(app_name: str):
+        logger.info("working ...")
+        logger.info("done")
+
+    deploy_app(app_name="my_app")
 
 
 def _test_indent():
@@ -175,7 +189,8 @@ def test():
         _test_nested_context_manager()
         _test_disabled_context_manager()
         _test_pretty_log_decorator()
-        _test_block()
+        _test_start_and_end()
+        _test_emoji_block()
         _test_indent()
 
 
