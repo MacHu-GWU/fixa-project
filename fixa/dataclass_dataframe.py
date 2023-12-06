@@ -7,6 +7,8 @@ A dataclass-based dataframe.
 import typing as T
 import dataclasses
 
+__version__ = "0.1.1"
+
 ROW = T.TypeVar("ROW")
 
 

@@ -21,6 +21,7 @@ import gzip
 import dataclasses
 from datetime import datetime, timezone
 
+__version__ = "0.1.1"
 
 def _parse_time(s: str) -> datetime:
     """

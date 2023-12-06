@@ -6,6 +6,7 @@ import contextlib
 import subprocess
 from pathlib import Path
 
+__version__ = "0.1.1"
 
 @contextlib.contextmanager
 def temp_cwd(path: Path):

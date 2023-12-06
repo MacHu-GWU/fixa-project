@@ -14,6 +14,7 @@ import typing as T
 import time
 from datetime import datetime
 
+__version__ = "0.1.1"
 
 class BaseTimer:
     """

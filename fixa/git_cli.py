@@ -10,6 +10,7 @@ import subprocess
 import contextlib
 from pathlib import Path
 
+__version__ = "0.1.1"
 
 @contextlib.contextmanager
 def temp_cwd(path: T.Union[str, Path]):  # pragma: no cover

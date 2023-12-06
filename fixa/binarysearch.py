@@ -11,6 +11,7 @@ Ref:
 import typing as T
 import bisect
 
+__version__ = "0.1.1"
 
 def find_index(sorted_array: list, x):
     """

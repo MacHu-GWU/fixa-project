@@ -5,6 +5,7 @@ import typing as T
 if T.TYPE_CHECKING:
     import boto3
 
+__version__ = "0.1.1"
 
 def mask_aws_account_id(aws_account_id: str) -> str:
     """

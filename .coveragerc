@@ -4,12 +4,22 @@
 omit =
     fixa/docs/*
     fixa/tests/*
-    fixa/aws/mock_test.py
+    fixa/aws/aws_athena_query.py
+    fixa/aws/aws_cloudwatch_logs_insights_query.py
     fixa/aws/aws_dynamodb_export_to_s3.py
+    fixa/aws/aws_lambda_version_and_alias.py
+    fixa/aws/aws_s3_lock.py
+    fixa/aws/aws_s3_search.py
+    fixa/aws/aws_s3_tracker.py
+    fixa/aws/aws_sts.py
+    fixa/aws/mock_test.py
+    fixa/pylib/*
     fixa/_version.py
     fixa/pytest_cov_helper.py
     fixa/os_platform.py
     fixa/runtime.py
+    fixa/runtime_v2.py
+    fixa/build_dist.py
 
 [report]
 # Regexes for lines to exclude from consideration

@@ -9,6 +9,8 @@ import dataclasses
 
 from fuzzywuzzy import process
 
+__version__ = "0.1.1"
+
 Item = T.TypeVar("Item")
 
 

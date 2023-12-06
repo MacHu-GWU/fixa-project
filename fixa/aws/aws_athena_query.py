@@ -36,6 +36,7 @@ if T.TYPE_CHECKING:
     from boto_session_manager import BotoSesManager
     from s3pathlib import S3Path
 
+__version__ = "0.1.1"
 
 def wait_athena_query_to_succeed(
     bsm: "BotoSesManager",

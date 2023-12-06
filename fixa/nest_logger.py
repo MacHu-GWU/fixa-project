@@ -39,6 +39,7 @@ import contextlib
 from functools import wraps
 from datetime import datetime
 
+__version__ = "0.1.1"
 
 def create_logger(
     name: T.Optional[str] = None,

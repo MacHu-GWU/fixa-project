@@ -35,6 +35,8 @@ import enum
 import string
 import dataclasses
 
+__version__ = "0.1.1"
+
 DELIMITERS = "!@#$%^&*()_+-=~`[{]}\\|;:'\",<.>/? \t\n"
 CHARSET = string.ascii_letters
 

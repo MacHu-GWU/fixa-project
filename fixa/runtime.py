@@ -20,6 +20,8 @@ Usage example:
 
 import os
 
+__version__ = "0.1.1"
+
 IS_LOCAL = False
 IS_CODEBUILD = False
 IS_JENKINS = False

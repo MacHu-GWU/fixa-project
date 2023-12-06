@@ -7,6 +7,7 @@ This module extend the diskcache.Cache class.
 import typing as T
 from diskcache import Cache
 
+__version__ = "0.1.1"
 
 def decohints(decorator: T.Callable) -> T.Callable:
     return decorator

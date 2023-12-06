@@ -12,6 +12,8 @@ templates.
 import random
 import string
 
+__version__ = "0.1.1"
+
 CHARSET_ALPHA_DIGITS = string.ascii_letters + string.digits
 
 CHARSET_HEXSTR_LOWER = "0123456789abcdef"

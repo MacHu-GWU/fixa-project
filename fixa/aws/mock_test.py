@@ -3,6 +3,7 @@
 import typing as T
 from boto_session_manager import BotoSesManager
 
+__version__ = "0.1.1"
 
 class BaseMockTest:
     """

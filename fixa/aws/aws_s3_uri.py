@@ -2,6 +2,7 @@
 
 import typing as T
 
+__version__ = "0.1.1"
 
 def split_s3_uri(
     s3_uri: str,

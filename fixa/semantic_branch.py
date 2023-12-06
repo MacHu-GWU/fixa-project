@@ -33,6 +33,7 @@ Usage example::
 import typing as T
 import enum
 
+__version__ = "0.1.1"
 
 class SemanticBranchEnum(str, enum.Enum):
     """

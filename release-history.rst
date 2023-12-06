@@ -20,9 +20,14 @@ Backlog (TODO)
 **Features and Improvements**
 
 - add ``aws.aws_sts`` module.
+- add ``jsonutils.py`` module.
 - add ``conventional_commits`` module.
 - add ``semantic_branch`` module.
 - add ``aws.aws_lambda_version_and_alias`` module.
+
+**Miscellaneous**
+
+- add ``__version__`` variable to all modules.
 
 
 0.11.1 (2023-10-24)

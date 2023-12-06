@@ -14,6 +14,8 @@ Reference:
 
 import sys
 
+__version__ = "0.1.1"
+
 IS_WINDOWS = False
 IS_MACOS = False
 IS_LINUX = False

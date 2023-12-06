@@ -5,6 +5,7 @@ import sys
 import time
 import itertools
 
+__version__ = "0.1.1"
 
 class Waiter:
     """

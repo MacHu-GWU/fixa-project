@@ -32,6 +32,7 @@ try:
 except ImportError:  # pragma: no cover
     from cached_property import cached_property
 
+__version__ = "0.1.1"
 
 class RunTimeEnum(str, enum.Enum):
     LOCAL = "LOCAL"  # local laptop

@@ -7,6 +7,7 @@ Improve the original enum module.
 import typing as T
 import enum
 
+__version__ = "0.1.1"
 
 class Mixin:
     @classmethod

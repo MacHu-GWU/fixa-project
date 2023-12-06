@@ -55,6 +55,7 @@ if T.TYPE_CHECKING:  # pragma: no cover
         GetQueryResultsResponseTypeDef,
     )
 
+__version__ = "0.1.1"
 
 # ------------------------------------------------------------------------------
 # Idempotent API

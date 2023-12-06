@@ -59,6 +59,7 @@ import dataclasses
 if T.TYPE_CHECKING:  # pragma: no cover
     from mypy_boto3_s3.client import S3Client
 
+__version__ = "0.1.1"
 
 @dataclasses.dataclass
 class BaseTracker:

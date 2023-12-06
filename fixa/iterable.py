@@ -9,6 +9,7 @@ import random
 import collections
 import itertools
 
+__version__ = "0.1.1"
 
 def flatten(iterable: T.Iterable) -> T.Iterable:
     """
