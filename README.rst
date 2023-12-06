@@ -70,8 +70,15 @@ Modules and Examples:
 - `hashes <./examples/hashes.ipynb>`_
 - `nested_logger <./examples/nested_logger.ipynb>`_
 - `timer <./examples/timer.ipynb>`_
+- `better_enum <./examples/better_enum.ipynb>`_
+- `dataclass_dataframe <./examples/dataclass_dataframe.ipynb>`_
+- `jsonutils <./examples/jsonutils.ipynb>`_
+- `rnd <./examples/rnd.ipynb>`_
 - `aws_s3_lock <./examples/aws/aws_s3_lock.ipynb>`_
 - `aws_s3_tracker <./examples/aws/aws_s3_tracker.ipynb>`_
+- `aws_s3_tracker <./examples/aws/aws_s3_tracker.ipynb>`_
+- `aws_s3_tracker <./examples/aws/aws_s3_tracker.ipynb>`_
+- `aws_sts <./examples/aws/aws_sts.ipynb>`_
 
 .. _install:
 

@@ -3,7 +3,7 @@
 from fixa import jsonutils
 
 
-def test_flatten():
+def test_json_loads():
     text = """
     # this is a comment
     {
