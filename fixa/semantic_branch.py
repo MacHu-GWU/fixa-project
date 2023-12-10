@@ -360,7 +360,11 @@ class SemanticBranchRule:
             True
             >>> semantic_branch_rule.is_certain_semantic_branch(git_branch_name="major", semantic_name="main")
             False
-            >>> semantic_branch_rule.is_certain_semantic_branch(git_branch_name="major", semantic_name="major")
+            >>> semantic_branch_rule.is_certain_semantic_branch(git_branch_name="feature/description", semantic_name="feature")
+            True
+            >>> semantic_branch_rule.is_certain_semantic_branch(git_branch_name="feature-123/description", semantic_name="feature")
+            True
+            >>> semantic_branch_rule.is_certain_semantic_branch(git_branch_name="release", semantic_name="release")
             InvalidSemanticNameError: semantic name 'major' doesn't match any semantic name in ['main', 'feature']
         """
         try:
@@ -387,6 +391,8 @@ class SemanticBranchRule:
             >>> semantic_branch_rule.parse_semantic_name("main")
             'main'
             >>> semantic_branch_rule.parse_semantic_name("feature/123")
+            'feature'
+            >>> semantic_branch_rule.parse_semantic_name("feature-123/123")
             'feature'
             >>> semantic_branch_rule.parse_semantic_name("release")
             InvalidSemanticNameError: branch 'major' doesn't match any semantic name in ['main', 'feature']

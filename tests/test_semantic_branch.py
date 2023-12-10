@@ -99,10 +99,12 @@ class TestSemanticBranchRule:
         # fmt: off
         assert semantic_branch_rule.is_certain_semantic_branch(git_branch_name="main", semantic_name="main") is True
         assert semantic_branch_rule.is_certain_semantic_branch(git_branch_name="master", semantic_name="main") is True
+        assert semantic_branch_rule.is_certain_semantic_branch(git_branch_name="feature/description", semantic_name="feature") is True
+        assert semantic_branch_rule.is_certain_semantic_branch(git_branch_name="feature-123/description", semantic_name="feature") is True
         assert semantic_branch_rule.is_certain_semantic_branch(git_branch_name="major", semantic_name="main") is False
 
         with pytest.raises(InvalidSemanticNameError):
-            semantic_branch_rule.is_certain_semantic_branch(git_branch_name="major", semantic_name="major")
+            semantic_branch_rule.is_certain_semantic_branch(git_branch_name="release", semantic_name="release")
         # fmt: on
 
     def test_parse_semantic_name(self):
@@ -112,7 +114,7 @@ class TestSemanticBranchRule:
         # this will hit cache
         assert semantic_branch_rule.parse_semantic_name("feature-123/123") == "feature"
         with pytest.raises(InvalidSemanticNameError):
-            semantic_branch_rule.parse_semantic_name("major")
+            semantic_branch_rule.parse_semantic_name("release")
         # fmt: on
 
 
