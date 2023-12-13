@@ -20,6 +20,12 @@ Backlog (TODO)
 **Features and Improvements**
 
 - add ``nest_logger.NestedLogger.emoji_block`` method.
+- add ``env_var.py`` module.
+- add ``git_cli.create_local_git_tag`` function.
+- add ``git_cli.delete_local_git_tag`` function.
+- add ``aws.aws_sts.mask_user_id`` function.
+- add ``aws.aws_sts.get_caller_identity`` function.
+- add ``aws.aws_sts.get_account_alias`` function.
 
 
 0.12.1 (2023-12-03)
