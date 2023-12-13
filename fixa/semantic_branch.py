@@ -57,12 +57,16 @@ __version__ = "0.2.1"
 class InvalidSemanticNameError(ValueError):
     """
     Raised when the semantic branch name is invalid.
+
+    .. versionadded:: 0.2.1
     """
 
 
 class SemanticBranchEnum(str, enum.Enum):
     """
     Semantic branch name enumeration.
+
+    .. versionadded:: 0.1.1
     """
 
     main = "main"
@@ -105,6 +109,8 @@ semantic_name_charset = set(string.ascii_lowercase + string.digits)
 def is_valid_semantic_name(name: str):
     """
     Valid semantic name should only contain lowercase letters and digits.
+
+    .. versionadded:: 0.2.1
     """
     return len(set(name).difference(semantic_name_charset)) == 0
 
@@ -113,6 +119,8 @@ def ensure_is_valid_semantic_name(name: str) -> str:  # pragma: no cover
     """
     Raise an exception if the name is not a valid semantic name.
     Otherwise, return it as it is.
+
+    .. versionadded:: 0.2.1
     """
     if is_valid_semantic_name(name) is False:
         raise InvalidSemanticNameError(f"{name!r} is not a valid semantic name")
@@ -126,7 +134,27 @@ def is_certain_semantic_branch(name: str, words: T.List[str]) -> bool:
     Below is an example to check if the branch name start with the keyword "feature"::
 
         >>> is_certain_semantic_branch(
+        ...     name="feature",
+        ...     stub=["feat", "feature"],
+        ... )
+        True
+        >>> is_certain_semantic_branch(
+        ...     name="feat",
+        ...     stub=["feat", "feature"],
+        ... )
+        True
+        >>> is_certain_semantic_branch(
+        ...     name="feature-123",
+        ...     stub=["feat", "feature"],
+        ... )
+        True
+        >>> is_certain_semantic_branch(
         ...     name="feature/add-this-feature",
+        ...     stub=["feat", "feature"],
+        ... )
+        True
+        >>> is_certain_semantic_branch(
+        ...     name="feature-123/description",
         ...     stub=["feat", "feature"],
         ... )
         True
@@ -135,6 +163,12 @@ def is_certain_semantic_branch(name: str, words: T.List[str]) -> bool:
     :param words: semantic words
 
     :return: a boolean value
+
+    .. versionadded:: 0.1.1
+
+    .. versionchanged:: 0.2.1
+
+        handle optional marker.
     """
     name = name.lower().strip()
     name = name.split("/")[0]
@@ -144,6 +178,9 @@ def is_certain_semantic_branch(name: str, words: T.List[str]) -> bool:
 
 
 def is_main_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -154,6 +191,9 @@ def is_main_branch(name: str) -> bool:
 
 
 def is_feature_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -164,6 +204,9 @@ def is_feature_branch(name: str) -> bool:
 
 
 def is_build_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -173,6 +216,9 @@ def is_build_branch(name: str) -> bool:
 
 
 def is_doc_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -182,6 +228,9 @@ def is_doc_branch(name: str) -> bool:
 
 
 def is_fix_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -191,6 +240,9 @@ def is_fix_branch(name: str) -> bool:
 
 
 def is_release_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -201,6 +253,9 @@ def is_release_branch(name: str) -> bool:
 
 
 def is_cleanup_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -211,6 +266,9 @@ def is_cleanup_branch(name: str) -> bool:
 
 
 def is_sandbox_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -221,6 +279,9 @@ def is_sandbox_branch(name: str) -> bool:
 
 
 def is_develop_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -231,6 +292,9 @@ def is_develop_branch(name: str) -> bool:
 
 
 def is_test_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -241,6 +305,9 @@ def is_test_branch(name: str) -> bool:
 
 
 def is_int_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -250,6 +317,9 @@ def is_int_branch(name: str) -> bool:
 
 
 def is_staging_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -261,6 +331,9 @@ def is_staging_branch(name: str) -> bool:
 
 
 def is_qa_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -270,6 +343,9 @@ def is_qa_branch(name: str) -> bool:
 
 
 def is_preprod_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -279,6 +355,9 @@ def is_preprod_branch(name: str) -> bool:
 
 
 def is_prod_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -289,6 +368,9 @@ def is_prod_branch(name: str) -> bool:
 
 
 def is_blue_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -298,6 +380,9 @@ def is_blue_branch(name: str) -> bool:
 
 
 def is_green_branch(name: str) -> bool:
+    """
+    .. versionadded:: 0.1.1
+    """
     return is_certain_semantic_branch(
         name,
         [
@@ -332,6 +417,8 @@ class SemanticBranchRule:
     :param _parse_semantic_name_cache: an internal cache to store the result of
         :meth:`SemanticBranchRulel.parse_semantic_name` method. End user should not
         use it.
+
+    .. versionadded:: 0.2.1
     """
 
     # fmt: off
@@ -366,6 +453,8 @@ class SemanticBranchRule:
             True
             >>> semantic_branch_rule.is_certain_semantic_branch(git_branch_name="release", semantic_name="release")
             InvalidSemanticNameError: semantic name 'major' doesn't match any semantic name in ['main', 'feature']
+
+        .. versionadded:: 0.2.1
         """
         try:
             keywords = self.rules[semantic_name]
@@ -396,6 +485,8 @@ class SemanticBranchRule:
             'feature'
             >>> semantic_branch_rule.parse_semantic_name("release")
             InvalidSemanticNameError: branch 'major' doesn't match any semantic name in ['main', 'feature']
+
+        .. versionadded:: 0.2.1
         """
         if git_branch_name in self._parse_semantic_name_cache:
             return self._parse_semantic_name_cache[git_branch_name]
