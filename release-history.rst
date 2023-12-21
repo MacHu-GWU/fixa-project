@@ -15,6 +15,14 @@ Backlog (TODO)
 **Miscellaneous**
 
 
+0.14.1 (2023-12-21)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``aws_s3_static_website_hosting.py`` module.
+- add ``aws_stepfunctions_version_and_alias.py`` module.
+
+
 0.13.1 (2023-12-13)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**

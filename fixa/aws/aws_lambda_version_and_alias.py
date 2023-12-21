@@ -46,6 +46,10 @@ def list_versions_by_function(
 ) -> T.List[dict]:
     """
     List all lambda function versions. Return a list of detail dict.
+    The order of the versions is not guaranteed.
+
+    :param lbd_client: ``boto3.client("lambda")`` object.
+    :param func_name: lambda function name
     """
     paginator = lbd_client.get_paginator("list_versions_by_function")
     response_iterator = paginator.paginate(
@@ -83,6 +87,9 @@ def get_last_published_version(
     """
     Get the last published version number. If there's no published version,
     return None.
+
+    :param lbd_client: ``boto3.client("lambda")`` object.
+    :param func_name: lambda function name
     """
     versions = list_versions_by_function(lbd_client, func_name, max_items)
     int_versions = version_dct_to_version_int(versions)
@@ -104,6 +111,9 @@ def publish_version(
     Reference:
 
     - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda/client/publish_version.html
+
+    :param lbd_client: ``boto3.client("lambda")`` object.
+    :param func_name: lambda function name
 
     :return: a tuple of two items, first item is a boolean flag to indicate
         that if a new version is created. the second item is the version id.
@@ -128,7 +138,13 @@ def keep_n_most_recent_versions(
     max_items: int = 9999,
 ) -> T.List[int]:
     """
-    Only keep the most recent n versions, delete the rest of published versions. If a version is associated with an alias, it will not be deleted.
+    Only keep the most recent n versions, delete the rest of published versions.
+    If a version is associated with an alias, it will not be deleted.
+
+    :param lbd_client: ``boto3.client("lambda")`` object.
+    :param func_name: lambda function name
+    :param n: number of latest version to keep
+    :param max_items: max number of versions to list in one request.
     """
     versions = list_versions_by_function(lbd_client, func_name, max_items)
     int_versions = version_dct_to_version_int(versions)
@@ -159,7 +175,7 @@ def deploy_alias(
     """
     Point the alias to the given version or split traffic between two versions.
 
-    :param bsm: boto session manager object
+    :param lbd_client: ``boto3.client("lambda")`` object.
     :param func_name: lambda function name
     :param alias: alias name
     :param description: description of the alias
