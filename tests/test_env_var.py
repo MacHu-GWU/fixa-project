@@ -9,20 +9,25 @@ from fixa.env_var import (
 
 def test_temp_env_var():
     os.environ["TEST_1"] = "a"
+    os.environ["TEST_2"] = "b"
 
-    with temp_env_var({"TEST_1": "aaa", "TEST_2": "bbb"}):
+    with temp_env_var({"TEST_1": "aaa", "TEST_2": None, "TEST_3": "ccc"}):
         assert os.environ["TEST_1"] == "aaa"
-        assert os.environ["TEST_2"] == "bbb"
+        assert "TEST_2" not in os.environ
+        assert os.environ["TEST_3"] == "ccc"
     assert os.environ["TEST_1"] == "a"
-    assert "TEST_2" not in os.environ
+    assert os.environ["TEST_2"] == "b"
+    assert "TEST_3" not in os.environ
 
     try:
-        with temp_env_var({"TEST_1": "aaa", "TEST_2": "bbb"}):
+        with temp_env_var({"TEST_1": "aaa", "TEST_2": None, "TEST_3": "ccc"}):
+            _ = 1
             raise Exception
     except Exception:
         pass
     assert os.environ["TEST_1"] == "a"
-    assert "TEST_2" not in os.environ
+    assert os.environ["TEST_2"] == "b"
+    assert "TEST_3" not in os.environ
 
 
 def test_normalize_env_var_name():

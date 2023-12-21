@@ -15,7 +15,7 @@ import typing as T
 import os
 import contextlib
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 @contextlib.contextmanager
@@ -24,6 +24,10 @@ def temp_env_var(mapper: T.Dict[str, str]):
     Temporarily set environment variables and revert them back.
 
     .. versionadded:: 0.1.1
+
+    .. versionchanged:: 0.1.2
+
+        allow to use key = None to temporarily delete an environment variable.
     """
     # get existing env var
     existing = {}
@@ -33,11 +37,17 @@ def temp_env_var(mapper: T.Dict[str, str]):
     try:
         # set new env var
         for k, v in mapper.items():
-            os.environ[k] = v
+            # v = None means delete this env var
+            if v is None:
+                if k in os.environ:
+                    os.environ.pop(k)
+            else:
+                os.environ[k] = v
         yield
     finally:
         # recover the original env var
         for k, v in existing.items():
+            # v = None means this env var not exists at begin
             if v is None:
                 os.environ.pop(k)
             else:
