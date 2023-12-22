@@ -15,13 +15,14 @@ Backlog (TODO)
 **Miscellaneous**
 
 
-0.14.1 (2023-12-21)
+0.14.1 (2023-12-22)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
 - add ``deployment_pattern.py`` module.
 - add ``aws_s3_static_website_hosting.py`` module.
 - add ``aws_stepfunctions_version_and_alias.py`` module.
+- add new feature related to blue/green and canary deployment to ``aws_lambda_version_and_alias.py`` module, bump version to 0.2.1.
 
 
 0.13.1 (2023-12-13)
