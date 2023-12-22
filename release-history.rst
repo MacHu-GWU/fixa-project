@@ -19,6 +19,7 @@ Backlog (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
+- add ``deployment_pattern.py`` module.
 - add ``aws_s3_static_website_hosting.py`` module.
 - add ``aws_stepfunctions_version_and_alias.py`` module.
 
