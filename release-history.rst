@@ -8,6 +8,8 @@ Backlog (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
+- add ``better_dataclasses.py`` module.
+
 **Minor Improvements**
 
 **Bugfixes**

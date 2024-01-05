@@ -7,7 +7,8 @@ omit =
     fixa/aws/aws_athena_query.py
     fixa/aws/aws_cloudwatch_logs_insights_query.py
     fixa/aws/aws_dynamodb_export_to_s3.py
-    fixa/aws/aws_lambda_version_and_alias.py
+    # fixa/aws/aws_lambda_version_and_alias.py
+    # fixa/aws/aws_stepfunctions_version_and_alias.py
     fixa/aws/aws_s3_lock.py
     fixa/aws/aws_s3_search.py
     fixa/aws/aws_s3_tracker.py
