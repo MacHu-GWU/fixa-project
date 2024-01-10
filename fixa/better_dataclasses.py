@@ -23,7 +23,6 @@ _class_fields: T.Dict[T.Any, T_FIELDS] = {}
 T_DATA_LIKE = T.Union[T_DATA, "T_DATA_CLASS", None]
 
 
-@dataclasses.dataclass
 class DataClass:
     """
     Enhanced dataclass that does serialization and deserialization correctly,
@@ -128,6 +127,22 @@ class DataClass:
             raise TypeError
 
     @classmethod
+    def _from_mapper(
+        cls: T.Type["T_DATA_CLASS"],
+        map_of_dct_or_obj: T.Optional[T.Dict[str, T_DATA_LIKE]],
+    ) -> T.Optional[T.Dict[str, T.Optional["T_DATA_CLASS"]]]:
+        """
+        Construct dict of instance from dict of dataclass-like data.
+        It could be a dictionary, an instance of this class, or None.
+        """
+        if isinstance(map_of_dct_or_obj, dict):
+            return {k: cls.from_dict(v) for k, v in map_of_dct_or_obj.items()}
+        elif map_of_dct_or_obj is None:
+            return None
+        else:  # pragma: no cover
+            raise TypeError
+
+    @classmethod
     def nested_field(
         cls,
         default=dataclasses.MISSING,
@@ -145,16 +160,19 @@ class DataClass:
         if metadata is None:
             metadata = {}
         metadata[MetadataKeyEnum.CONVERTER.value] = cls.from_dict
-        return dataclasses.field(
-            default=default,
-            default_factory=default_factory,
+        params = dict(
             init=init,
             repr=repr,
             hash=hash,
             compare=compare,
             metadata=metadata,
-            **kwargs,
         )
+        if default is not dataclasses.MISSING:
+            params["default"] = default
+        if default_factory is not dataclasses.MISSING:
+            params["default_factory"] = default_factory
+        params.update(kwargs)
+        return dataclasses.field(**params)
 
     @classmethod
     def list_of_nested_field(
@@ -174,16 +192,51 @@ class DataClass:
         if metadata is None:
             metadata = {}
         metadata[MetadataKeyEnum.CONVERTER.value] = cls.from_list
-        return dataclasses.field(
-            default=default,
-            default_factory=default_factory,
+        params = dict(
             init=init,
             repr=repr,
             hash=hash,
             compare=compare,
             metadata=metadata,
-            **kwargs,
         )
+        if default is not dataclasses.MISSING:
+            params["default"] = default
+        if default_factory is not dataclasses.MISSING:
+            params["default_factory"] = default_factory
+        params.update(kwargs)
+        return dataclasses.field(**params)
+
+    @classmethod
+    def map_of_nested_field(
+        cls,
+        default=dataclasses.MISSING,
+        default_factory=dataclasses.MISSING,
+        init=True,
+        repr=True,
+        hash=None,
+        compare=True,
+        metadata=None,
+        **kwargs,
+    ):
+        """
+        Declare a field that is a list of other dataclass.
+        """
+        if metadata is None:
+            metadata = {}
+        metadata[MetadataKeyEnum.CONVERTER.value] = cls._from_mapper
+        params = dict(
+            init=init,
+            repr=repr,
+            hash=hash,
+            compare=compare,
+            metadata=metadata,
+        )
+        if default is not dataclasses.MISSING:
+            params["default"] = default
+        if default_factory is not dataclasses.MISSING:
+            params["default_factory"] = default_factory
+        params.update(kwargs)
+        return dataclasses.field(**params)
 
 
 T_DATA_CLASS = T.TypeVar("T_DATA_CLASS", bound=DataClass)

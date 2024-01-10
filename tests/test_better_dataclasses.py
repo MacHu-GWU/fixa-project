@@ -156,6 +156,27 @@ def test_profile_degrees_default_value():
     assert people1.degrees == list()
 
 
+def test_nested_mapper():
+    @dataclasses.dataclass
+    class Record(DataClass):
+        record_id: str = dataclasses.field()
+
+    @dataclasses.dataclass
+    class Batch(DataClass):
+        batch_id: str = dataclasses.field()
+        records: T.Dict[str, Record] = Record.map_of_nested_field()
+
+    batch = Batch(
+        batch_id="b-1",
+        records={"r-1": Record(record_id="r-1")},
+    )
+    batch_data = batch.to_dict()
+    batch1 = Batch.from_dict(batch_data)
+    batch1_data = batch.to_dict()
+    assert batch == batch1
+    assert batch_data == batch1_data
+
+
 if __name__ == "__main__":
     from fixa.tests import run_cov_test
 
