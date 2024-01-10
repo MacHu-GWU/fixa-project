@@ -137,7 +137,7 @@ class DataClass:
         hash=None,
         compare=True,
         metadata=None,
-        kw_only=dataclasses.MISSING,
+        **kwargs,
     ):
         """
         Declare a field that is another dataclass.
@@ -153,7 +153,7 @@ class DataClass:
             hash=hash,
             compare=compare,
             metadata=metadata,
-            kw_only=kw_only,
+            **kwargs,
         )
 
     @classmethod
@@ -166,7 +166,7 @@ class DataClass:
         hash=None,
         compare=True,
         metadata=None,
-        kw_only=dataclasses.MISSING,
+        **kwargs,
     ):
         """
         Declare a field that is a list of other dataclass.
@@ -182,7 +182,7 @@ class DataClass:
             hash=hash,
             compare=compare,
             metadata=metadata,
-            kw_only=kw_only,
+            **kwargs,
         )
 
 
