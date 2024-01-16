@@ -14,6 +14,8 @@ Backlog (TODO)
 
 **Bugfixes**
 
+- fix a bug that the aws mock test fails when having multiple subclass.
+
 **Miscellaneous**
 
 

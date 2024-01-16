@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 
+"""
+.. note::
+
+    We need to ensure that the mock start and mock stop are working as expected
+    when we have multiple subclass.
+"""
+
 import moto
 from fixa.aws.mock_test import (
     BaseMockTest,
 )
 
 
-class Test(BaseMockTest):
+class TestS3(BaseMockTest):
     mock_list = [
         moto.mock_s3,
     ]
@@ -26,6 +33,22 @@ class Test(BaseMockTest):
             .read()
             .decode("utf-8")
             == "hello world"
+        )
+
+
+class TestIam(BaseMockTest):
+    mock_list = [
+        moto.mock_iam,
+    ]
+
+    @classmethod
+    def setup_class_post_hook(cls):
+        cls.bsm.iam_client.create_group(GroupName="Admin")
+
+    def test(self):
+        assert (
+            self.bsm.iam_client.get_group(GroupName="Admin")["Group"]["GroupName"]
+            == "Admin"
         )
 
 
