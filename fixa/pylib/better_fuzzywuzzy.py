@@ -5,11 +5,15 @@ Fuzzy match utilities.
 """
 
 import typing as T
+import warnings
 import dataclasses
 
-from fuzzywuzzy import process
+# ignore the performance warning from fuzzywuzzy
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    from fuzzywuzzy import process
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 Item = T.TypeVar("Item")
 
