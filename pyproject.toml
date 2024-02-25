@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fixa"
-version = "0.6.1"
+version = "0.14.1"
 description = "Like the Ikea FIXA, it is my toolbox to fix things."
 authors = ["Sanhe Hu <husanhe@gmail.com>"]
 
